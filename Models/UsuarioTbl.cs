@@ -19,10 +19,12 @@ namespace PROJETO.Models
         public int UsuarioId { get; set; }
         
         [Column("usuario_nome")]
+        [Required]
         [StringLength(50)]
         public string UsuarioNome { get; set; }
         
         [Column("usuario_email")]
+        [Required]
         [StringLength(100)]
         public string UsuarioEmail { get; set; }
         
@@ -35,10 +37,12 @@ namespace PROJETO.Models
         public string UsuarioComunidade { get; set; }
         
         [Column("usuario_senha")]
+        [Required]
         [StringLength(255)]
         public string UsuarioSenha { get; set; }
         
         [Column("usuario_tipo_id")]
+        [Required]
         public int? UsuarioTipoId { get; set; }
 
         [ForeignKey(nameof(UsuarioTipoId))]

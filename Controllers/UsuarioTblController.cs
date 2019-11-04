@@ -35,7 +35,7 @@ namespace EventShareBackEnd.Controllers
         public async Task<ActionResult<UsuarioTbl>> Get(int id)
         {
             UsuarioTbl usuario = await repositorio.Get(id);
-
+            
 
             if (usuario == null)
             {
@@ -49,6 +49,18 @@ namespace EventShareBackEnd.Controllers
 
         public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
         {
+            if(!ModelState.IsValid){
+                return BadRequest();
+            }
+
+            if(!usuario.UsuarioEmail.Contains('@') || !usuario.UsuarioEmail.Contains('.')){
+                return BadRequest();
+            }
+
+            if(usuario.UsuarioSenha.Length < 8){
+                return BadRequest();
+            }
+
             try
             {
                 await repositorio.Post(usuario);

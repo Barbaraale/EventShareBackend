@@ -29,10 +29,13 @@ namespace EventShareBackEnd.Repositories
             return await context.UsuarioTbl.FindAsync(id);
         }
 
+
         public async Task<UsuarioTbl> Post(UsuarioTbl usuario)
         {
+
             UsuarioTbl usuarioCadastrado = usuario;
             usuarioCadastrado.UsuarioNome = usuario.UsuarioNome.ToLower();
+
 
             await context.UsuarioTbl.AddAsync(usuarioCadastrado);
             await context.SaveChangesAsync();
@@ -48,7 +51,7 @@ namespace EventShareBackEnd.Repositories
             usuarioModificado.UsuarioComunidade = usuario.UsuarioComunidade;
             usuarioModificado.UsuarioSenha = usuario.UsuarioSenha;
 
-            context.Entry(usuario).State = EntityState.Modified;
+            context.Entry(usuarioModificado).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return usuarioModificado;
         }
