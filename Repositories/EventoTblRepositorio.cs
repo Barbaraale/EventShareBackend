@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,10 +31,14 @@ namespace PROJETO.Repositories
 
         public async Task<List<EventoTbl>> BuscarPalavraChave(string nome){
             List<EventoTbl> listaE = await context.EventoTbl.Where(e => e.EventoNome.Contains(nome)).ToListAsync();
-            
             return listaE;
         }
 
+        public async Task<List<EventoTbl>> BuscarPorCategoria(string categoria){
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaNome.Contains(categoria)).Include(ev => ev.EventoCategoria).ToListAsync();
+            return listaE;
+        }
+        
         public async Task<EventoTbl> Post(EventoTbl evento){
         
             EventoTbl eventoCadastrado = evento;

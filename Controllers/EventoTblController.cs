@@ -45,6 +45,12 @@ namespace PROJETO.Controllers
              return listaRetornada;
         }
 
+        [HttpGet("categoria/{categoria}")]
+        public async Task<List<EventoTbl>> GetCategoria(string categoria){
+            List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria(categoria);
+            return listaRetornada;
+        }
+
         [HttpPost]
         public async Task<ActionResult<EventoTbl>> Post(EventoTbl evento){
             try
