@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventShareBackEnd.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
 
@@ -45,8 +46,8 @@ namespace EventShareBackEnd.Controllers
             return usuario;
         }
 
+        [AllowAnonymous]
         [HttpPost]
-
         public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
         {
             if(!ModelState.IsValid){
@@ -72,8 +73,8 @@ namespace EventShareBackEnd.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
-
         public async Task<ActionResult<UsuarioTbl>> Put(int id, UsuarioTbl usuario)
         {
             try
@@ -95,7 +96,7 @@ namespace EventShareBackEnd.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UsuarioTbl>> Delete(int id)
         {

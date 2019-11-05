@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
 using PROJETO.Repositories;
@@ -11,6 +12,7 @@ namespace PROJETO.Controllers {
     public class EventoTblController : ControllerBase {
         EventoTblRepositorio repositorio = new EventoTblRepositorio ();
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<EventoTbl>>> Get () {
             List<EventoTbl> listaE = await repositorio.ListarEventos ();
@@ -26,6 +28,7 @@ namespace PROJETO.Controllers {
             return listaE;
         }
 
+        [AllowAnonymous]
         [HttpGet ("{nomeEvento}")]
         public async Task<ActionResult<EventoTbl>> Get (string nomeEvento) {
             EventoTbl eventoRetornado = await repositorio.BuscarPorNome (nomeEvento);
@@ -37,24 +40,28 @@ namespace PROJETO.Controllers {
             return eventoRetornado;
         }
 
+        [AllowAnonymous]
         [HttpGet ("busca/{nome}")]
         public async Task<ActionResult<List<EventoTbl>>> GetKey (string nome) {
             List<EventoTbl> listaRetornada = await repositorio.BuscarPalavraChave (nome);
             return listaRetornada;
         }
 
+        [AllowAnonymous]
         [HttpGet ("categoria/{categoria}")]
         public async Task<List<EventoTbl>> GetCategoria (string categoria) {
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria (categoria);
             return listaRetornada;
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet ("status/(status)")]
         public async Task<List<EventoTbl>> GetStatus (string status){
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorStatus(status);
             return listaRetornada;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<EventoTbl>> Post (EventoTbl evento) {
             try {
@@ -64,6 +71,7 @@ namespace PROJETO.Controllers {
             }
         }
 
+        [Authorize]
         [HttpPut ("{id}")]
         public async Task<ActionResult<EventoTbl>> Put (int id, EventoTbl evento) {
             try {
@@ -78,6 +86,7 @@ namespace PROJETO.Controllers {
             }
         }
 
+        [Authorize]
         [HttpDelete ("{id}")]
         public async Task<ActionResult<EventoTbl>> Delete (int id) {
             try {

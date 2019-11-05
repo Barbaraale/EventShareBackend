@@ -13,6 +13,7 @@ namespace EventShareBackend_master.Controllers
     {
         EventShareContext context = new EventShareContext();
         StatusRepositorio repositorio = new StatusRepositorio();
+
         
         [HttpGet]
         public async Task<ActionResult<List<EventoStatusTbl>>> Get()
@@ -25,7 +26,9 @@ namespace EventShareBackend_master.Controllers
             {
                  throw;
             }
-         }
+        }
+
+
        [HttpGet("{nome}")]
        public async Task<ActionResult<EventoStatusTbl>> Get(string nome)
        {
