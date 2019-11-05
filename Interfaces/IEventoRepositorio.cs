@@ -12,7 +12,6 @@ namespace PROJETO.Interfaces
         Task<List<EventoTbl>> BuscarPalavraChave(string nome);
         Task<EventoTbl> BuscarPorNome(string nomeEvento);
         Task<List<EventoTbl>> BuscarPorCategoria(string categoria);
-        Task<List<EventoTbl>> BuscarPorData(DateTime data);
         Task<EventoTbl> Post(EventoTbl evento);
         Task<EventoTbl> Put(int id, EventoTbl evento);
         Task<EventoTbl> DeletarEvento(int id);
