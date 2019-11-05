@@ -28,17 +28,21 @@ namespace PROJETO.Repositories
 
             return retorno;
         }
-
+    
         public async Task<List<EventoTbl>> BuscarPalavraChave(string nome){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(e => e.EventoNome.Contains(nome)).ToListAsync();
+            List<EventoTbl> listaE = await context.EventoTbl.Where(e => e.EventoNome.Contains(nome)).Include(Es => Es.EventoStatus).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(rev => rev.ResponsavelUsuario).ToListAsync();
             return listaE;
         }
 
         public async Task<List<EventoTbl>> BuscarPorCategoria(string categoria){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaNome.Contains(categoria)).Include(ev => ev.EventoCategoria).ToListAsync();
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaNome.Contains(categoria)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
             return listaE;
         }
         
+        public async Task<List<EventoTbl>> BuscarPorStatus(string status){
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoStatus.EventoStatusNome.Contains(status)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            return listaE;
+        }
         public async Task<EventoTbl> Post(EventoTbl evento){
         
             EventoTbl eventoCadastrado = evento;
@@ -72,5 +76,7 @@ namespace PROJETO.Repositories
             await context.SaveChangesAsync();
             return eventoRetornado;
         }
+
+    
     }
 }
