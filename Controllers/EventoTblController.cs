@@ -49,7 +49,7 @@ namespace PROJETO.Controllers {
             return listaRetornada;
         }
 
-        [HttpGet ("status/(status)")]
+        [HttpGet ("status/{status}")]
         public async Task<List<EventoTbl>> GetStatus (string status){
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorStatus(status);
             return listaRetornada;
