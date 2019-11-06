@@ -24,6 +24,12 @@ namespace EventShareBackend.Controllers
         public LoginController(IConfiguration mconfig){
             config = mconfig;
         }   
+
+        /// <summary>
+        /// Método para realizar o login
+        /// </summary>
+        /// <returns>Retorna token</returns>
+        /// <param name="login"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpPost]

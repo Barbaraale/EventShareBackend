@@ -13,6 +13,10 @@ namespace PROJETO.Controllers {
     public class EventoTblController : ControllerBase {
         EventoTblRepositorio repositorio = new EventoTblRepositorio ();
 
+        /// <summary>
+        /// Método para listar todos os eventos existentes
+        /// </summary>
+        /// <returns>Retorna lista de eventos</returns>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet]
@@ -29,6 +33,12 @@ namespace PROJETO.Controllers {
 
             return listaE;
         }
+
+        /// <summary>
+        /// Método para buscar evento pelo nome
+        /// </summary>
+        /// <returns>Retorna o evento</returns>
+        /// <param name="nomeEvento"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet ("{nomeEvento}")]
@@ -41,6 +51,12 @@ namespace PROJETO.Controllers {
 
             return eventoRetornado;
         }
+
+        /// <summary>
+        /// Método para listar eventos por uma palavra chave
+        /// </summary>
+        /// <returns>Retorna a lista de eventos</returns>
+        /// <param name="nome"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet ("busca/{nome}")]
@@ -48,6 +64,12 @@ namespace PROJETO.Controllers {
             List<EventoTbl> listaRetornada = await repositorio.BuscarPalavraChave (nome);
             return listaRetornada;
         }
+
+        /// <summary>
+        /// Método para filtrar os eventos de acordo com sua categoria
+        /// </summary>
+        /// <returns>Retorna a lista de eventos</returns>
+        /// <param name="categoria"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet ("categoria/{categoria}")]
@@ -55,6 +77,12 @@ namespace PROJETO.Controllers {
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria (categoria);
             return listaRetornada;
         }
+
+        /// <summary>
+        /// Método para filtrar eventos pelo status, restrito somente ao administrador
+        /// </summary>
+        /// <returns>Retorna a lista de eventos</returns>
+        /// <param name="status"></param>
         [EnableCors]
         [Authorize(Roles = "Administrador")]
         [HttpGet ("status/(status)")]
@@ -62,6 +90,12 @@ namespace PROJETO.Controllers {
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorStatus(status);
             return listaRetornada;
         }
+
+        /// <summary>
+        /// Método para cadastrar um novo evento
+        /// </summary>
+        /// <returns>Retorna o evento criado</returns>
+        /// <param name="evento"></param>
         [EnableCors]
         [Authorize]
         [HttpPost]
@@ -72,6 +106,13 @@ namespace PROJETO.Controllers {
                 throw;
             }
         }
+
+        /// <summary>
+        /// Método para atualizar informaçoes de um evento previamente cadastrado
+        /// </summary>
+        /// <returns>Retorna o evento relacionado ao ID</returns>
+        /// <param name="id"></param>
+        /// <param name="evento"></param>
         [EnableCors]
         [Authorize]
         [HttpPut ("{id}")]
@@ -87,6 +128,12 @@ namespace PROJETO.Controllers {
                 }
             }
         }
+
+        /// <summary>
+        /// Método para deletar um evento existente
+        /// </summary>
+        /// <returns>Retorna o evento deletado</returns>
+        /// <param name="id"></param>
         [EnableCors]
         [Authorize]
         [HttpDelete ("{id}")]

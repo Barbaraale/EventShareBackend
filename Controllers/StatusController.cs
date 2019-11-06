@@ -15,6 +15,10 @@ namespace EventShareBackend_master.Controllers
         EventShareContext context = new EventShareContext();
         StatusRepositorio repositorio = new StatusRepositorio();
 
+        /// <summary>
+        /// Método para listar os status existentes
+        /// </summary>
+        /// <returns>Retorna lista de status</returns>
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<List<EventoStatusTbl>>> Get()
@@ -29,16 +33,5 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
-        [EnableCors]
-        [HttpGet("{nome}")]
-       public async Task<ActionResult<EventoStatusTbl>> Get(string nome)
-       {
-           EventoStatusTbl eventoRetornada = await context.EventoStatusTbl.FirstOrDefaultAsync(s => s.EventoStatusNome == nome);
-           if(eventoRetornada == null)
-           {
-               return NotFound();
-           }
-           return eventoRetornada;
-       }
     }
 }

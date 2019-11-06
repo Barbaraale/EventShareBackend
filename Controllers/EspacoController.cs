@@ -14,6 +14,11 @@ namespace EventShareBackend_master.Controllers
     public class EspacoController : ControllerBase
     {
       EventShareContext context = new EventShareContext();
+        
+        /// <summary>
+        /// Método para listar os espaços e eventos
+        /// </summary>
+        /// <returns>Retorna lista de espaços</returns>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet]
@@ -28,6 +33,11 @@ namespace EventShareBackend_master.Controllers
            return listadeEspaco;
        }
 
+        /// <summary>
+        /// Método para chamar o espaço de eventos pelo ID
+        /// </summary>
+        /// <returns>Retorna o evento</returns>
+        /// <param name="id"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet("{id}")]

@@ -17,6 +17,11 @@ namespace EventShareBackend_master.Controllers
     {
         EventShareContext context = new EventShareContext();
         CategoriaRepositorio repositorio = new CategoriaRepositorio();
+        
+        /// <summary>
+        /// Método lista todas as categorias de evento existentes
+        /// </summary>
+        /// <returns>Retorna a lista de categorias</returns>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet]
@@ -31,6 +36,12 @@ namespace EventShareBackend_master.Controllers
                 throw;
             }            
         }
+
+        /// <summary>
+        /// Método lista eventos pela sua categoria
+        /// </summary>
+        /// <returns>Retorna a lista de categorias</returns>
+        /// <param name="categoriaNome"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpGet("{CategoriaNome}")]
@@ -43,6 +54,12 @@ namespace EventShareBackend_master.Controllers
            }
            return categoriaRetornada;
        }
+
+        /// <summary>
+        /// Método para criar uma nova categoria, acesso restrito ao administrador
+        /// </summary>
+        /// <returns>Retorna categoria criada</returns>
+        /// <param name="categoria"></param>
         [EnableCors]
         [Authorize(Roles = "Administrador")]
         [HttpPost]
@@ -58,6 +75,13 @@ namespace EventShareBackend_master.Controllers
                throw;
            }
        }
+
+        /// <summary>
+        /// Método para atualizar uma categoria existente, acesso restrito ao administrador
+        /// </summary>
+        /// <returns>Retorna categoria atualizada</returns>
+        /// <param name="id"></param>
+        /// <param name="categoria"></param>
        [EnableCors]
        [Authorize(Roles = "Administrador")]
        [HttpPut("{id}")]
@@ -75,6 +99,12 @@ namespace EventShareBackend_master.Controllers
           return Ok();
 
        }
+
+        /// <summary>
+        /// Método para deletar uma categoria existente, acesso restrito ao administrador
+        /// </summary>
+        /// <returns>Retorna categoria deletada</returns>
+        /// <param name="id"></param>
        [EnableCors]
        [Authorize(Roles = "Administrador")]
        [HttpDelete("{id}")]

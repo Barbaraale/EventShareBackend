@@ -16,6 +16,10 @@ namespace EventShareBackend_master.Controllers
         EventShareContext context = new EventShareContext();
         UsuarioTipoRepositorio repositorio = new UsuarioTipoRepositorio();
 
+        /// <summary>
+        /// Método para listar os tipos de usuário
+        /// </summary>
+        /// <returns>Retorna lista de tipos usuarios</returns>
         [EnableCors]
         [Authorize]
         [HttpGet]
@@ -28,6 +32,11 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para buscar o tipo de usuário pelo ID
+        /// </summary>
+        /// <returns>Retorna o tipo de usuário</returns>
+        ///<param name="id"></param>
         [EnableCors]
         [Authorize]
         [HttpGet("{id}")]
@@ -42,46 +51,5 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
-        [EnableCors]
-        [Authorize(Roles = "Administrador")]
-        [HttpPost]
-        public async Task<ActionResult<UsuarioTipoTbl>> Post(UsuarioTipoTbl usuarioTipoTbl)
-        {
-            try
-            {
-                return await repositorio.Post(usuarioTipoTbl);
-            }catch(System.Exception)
-            {
-                throw;
-            }
-        }
-
-        [EnableCors]
-        [Authorize(Roles = "Administrador")]
-        [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioTipoTbl>> Put(int id, UsuarioTipoTbl usuarioTipoTbl)
-        {
-            try
-            {
-                return await repositorio.Put(id, usuarioTipoTbl);
-            }catch(System.Exception)
-            {
-                throw;
-            }
-        }
-
-        [EnableCors]
-        [Authorize(Roles = "Administrador")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<UsuarioTipoTbl>> Delete(int id)
-        {
-            UsuarioTipoTbl tipoRetornado = await repositorio.Get(id);
-            if(tipoRetornado == null)
-            {
-                return NotFound("Categoria não encontrada");
-            }
-            await repositorio.Delete(tipoRetornado.TipoId);
-            return tipoRetornado;
-        }
     }
 }

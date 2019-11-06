@@ -16,5 +16,6 @@ namespace PROJETO.Interfaces
         Task<EventoTbl> Post(EventoTbl evento);
         Task<EventoTbl> Put(int id, EventoTbl evento);
         Task<EventoTbl> DeletarEvento(int id);
+        Task<EventoTbl> UploadImagem(string imagem);
     }
 }

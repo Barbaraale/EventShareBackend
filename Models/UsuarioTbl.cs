@@ -45,6 +45,10 @@ namespace PROJETO.Models
         [Required]
         public int? UsuarioTipoId { get; set; }
 
+        [Column("usuario_imagem")]
+        [StringLength(250)]
+        public string UsuarioImagem{ get; set; }
+
         [ForeignKey(nameof(UsuarioTipoId))]
         [InverseProperty(nameof(UsuarioTipoTbl.UsuarioTbl))]
         public virtual UsuarioTipoTbl UsuarioTipo { get; set; }

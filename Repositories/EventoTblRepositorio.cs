@@ -25,7 +25,6 @@ namespace PROJETO.Repositories
         public async Task<EventoTbl> BuscarPorNome(string nomeEvento){
             string nomeDoEvento = nomeEvento.ToLower();
             var retorno = await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).FirstOrDefaultAsync(x => x.EventoNome == nomeEvento);
-
             return retorno;
         }
     
@@ -77,6 +76,9 @@ namespace PROJETO.Repositories
             return eventoRetornado;
         }
 
-    
+        public Task<EventoTbl> UploadImagem(string imagem)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

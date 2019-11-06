@@ -35,6 +35,10 @@ namespace PROJETO.Models
         [Column("responsavel_usuario_id")]
         public int? ResponsavelUsuarioId { get; set; }
 
+        [Column("evento_imagem")]
+        [StringLength(250)]
+        public string EventoImagem{ get; set; }
+
         [ForeignKey(nameof(CriadorUsuarioId))]
         [InverseProperty(nameof(UsuarioTbl.EventoTblCriadorUsuario))]
         public virtual UsuarioTbl CriadorUsuario { get; set; }

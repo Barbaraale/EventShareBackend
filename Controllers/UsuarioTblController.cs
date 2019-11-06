@@ -19,6 +19,10 @@ namespace EventShareBackEnd.Controllers
 
         UsuarioTblRepositorio repositorio = new UsuarioTblRepositorio();
 
+        /// <summary>
+        /// Método para listar os usuário cadastrados
+        /// </summary>
+        /// <returns>Retorna lista de usuarios</returns>
         [EnableCors]
         [HttpGet]
         public async Task<ActionResult<List<UsuarioTbl>>> Get()
@@ -32,6 +36,12 @@ namespace EventShareBackEnd.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Método para buscar um usuario pelo ID
+        /// </summary>
+        /// <returns>Retorna o usuário</returns>
+        /// <param name="id"></param>
         [EnableCors]
         [HttpGet("{id}")]
 
@@ -47,6 +57,12 @@ namespace EventShareBackEnd.Controllers
 
             return usuario;
         }
+
+        /// <summary>
+        /// Método para criar um usuario
+        /// </summary>
+        /// <returns>Retorna o usuario cadastrado</returns>
+        /// <param name="usuario"></param>
         [EnableCors]
         [AllowAnonymous]
         [HttpPost]
@@ -74,6 +90,13 @@ namespace EventShareBackEnd.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Método para atualizar dados de um usuário cadastrado
+        /// </summary>
+        /// <returns>Retorna o usuario</returns>
+        ///<param name="id"></param>
+        /// <param name="usuario"></param>
         [EnableCors]
         [Authorize]
         [HttpPut("{id}")]
@@ -98,6 +121,11 @@ namespace EventShareBackEnd.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para deletar um usuário cadastrado
+        /// </summary>
+        /// <returns>Retorna o usuario deletado</returns>
+        ///<param name="id"></param>
         [EnableCors]
         [Authorize]
         [HttpDelete("{id}")]

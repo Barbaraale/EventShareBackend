@@ -8,12 +8,5 @@ namespace EventShareBackend_master.Interfaces
     {
     Task<List<EventoStatusTbl>> Get();
 
-    Task<EventoStatusTbl> Get(string statusNome);
-
-    Task<EventoStatusTbl> Post(EventoStatusTbl status);
-
-    Task<EventoStatusTbl> Alterar(EventoStatusTbl status);
-
-    Task<EventoStatusTbl> Delete(EventoStatusTbl statusRetornado);    
     }
 }
