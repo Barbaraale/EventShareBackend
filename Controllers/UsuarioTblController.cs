@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventShareBackEnd.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
 
@@ -17,6 +19,7 @@ namespace EventShareBackEnd.Controllers
 
         UsuarioTblRepositorio repositorio = new UsuarioTblRepositorio();
 
+        [EnableCors]
         [HttpGet]
         public async Task<ActionResult<List<UsuarioTbl>>> Get()
         {
@@ -29,7 +32,7 @@ namespace EventShareBackEnd.Controllers
                 throw;
             }
         }
-
+        [EnableCors]
         [HttpGet("{id}")]
 
         public async Task<ActionResult<UsuarioTbl>> Get(int id)
@@ -44,9 +47,9 @@ namespace EventShareBackEnd.Controllers
 
             return usuario;
         }
-
+        [EnableCors]
+        [AllowAnonymous]
         [HttpPost]
-
         public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
         {
             if(!ModelState.IsValid){
@@ -71,9 +74,9 @@ namespace EventShareBackEnd.Controllers
                 throw;
             }
         }
-
+        [EnableCors]
+        [Authorize]
         [HttpPut("{id}")]
-
         public async Task<ActionResult<UsuarioTbl>> Put(int id, UsuarioTbl usuario)
         {
             try
@@ -95,7 +98,8 @@ namespace EventShareBackEnd.Controllers
             }
         }
 
-
+        [EnableCors]
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UsuarioTbl>> Delete(int id)
         {

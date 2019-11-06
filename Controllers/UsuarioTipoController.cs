@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventShareBackend_master.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
 
@@ -14,6 +16,8 @@ namespace EventShareBackend_master.Controllers
         EventShareContext context = new EventShareContext();
         UsuarioTipoRepositorio repositorio = new UsuarioTipoRepositorio();
 
+        [EnableCors]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<UsuarioTipoTbl>>> Get() 
         {
@@ -24,6 +28,8 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
+        [EnableCors]
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsuarioTipoTbl>> Get(int id) 
         {
@@ -36,6 +42,8 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
+        [EnableCors]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<ActionResult<UsuarioTipoTbl>> Post(UsuarioTipoTbl usuarioTipoTbl)
         {
@@ -48,6 +56,8 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
+        [EnableCors]
+        [Authorize(Roles = "Administrador")]
         [HttpPut("{id}")]
         public async Task<ActionResult<UsuarioTipoTbl>> Put(int id, UsuarioTipoTbl usuarioTipoTbl)
         {
@@ -60,6 +70,8 @@ namespace EventShareBackend_master.Controllers
             }
         }
 
+        [EnableCors]
+        [Authorize(Roles = "Administrador")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UsuarioTipoTbl>> Delete(int id)
         {

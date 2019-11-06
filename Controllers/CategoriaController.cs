@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EventShareBackend_master.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PROJETO.Models;
@@ -15,7 +17,8 @@ namespace EventShareBackend_master.Controllers
     {
         EventShareContext context = new EventShareContext();
         CategoriaRepositorio repositorio = new CategoriaRepositorio();
-
+        [EnableCors]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<EventoCategoriaTbl>>> Get()
         {
@@ -28,7 +31,8 @@ namespace EventShareBackend_master.Controllers
                 throw;
             }            
         }
-
+        [EnableCors]
+        [AllowAnonymous]
         [HttpGet("{CategoriaNome}")]
        public async Task<ActionResult<EventoCategoriaTbl>> Get(string categoriaNome)
        {
@@ -39,8 +43,9 @@ namespace EventShareBackend_master.Controllers
            }
            return categoriaRetornada;
        }
-
-       [HttpPost]
+        [EnableCors]
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
        public async Task<ActionResult<EventoCategoriaTbl>> Post(EventoCategoriaTbl categoria)
        {
            try
@@ -53,7 +58,8 @@ namespace EventShareBackend_master.Controllers
                throw;
            }
        }
-       
+       [EnableCors]
+       [Authorize(Roles = "Administrador")]
        [HttpPut("{id}")]
        public async Task<ActionResult> Put(int id, EventoCategoriaTbl categoria)
        {
@@ -69,7 +75,8 @@ namespace EventShareBackend_master.Controllers
           return Ok();
 
        }
-       
+       [EnableCors]
+       [Authorize(Roles = "Administrador")]
        [HttpDelete("{id}")]
        public async Task<ActionResult<EventoCategoriaTbl>> Delete(int id)
        {

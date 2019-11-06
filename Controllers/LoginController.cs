@@ -4,7 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PROJETO.Models;
@@ -22,7 +24,7 @@ namespace EventShareBackend.Controllers
         public LoginController(IConfiguration mconfig){
             config = mconfig;
         }   
-        
+        [EnableCors]
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(UsuarioTbl login){
@@ -39,7 +41,7 @@ namespace EventShareBackend.Controllers
         }
 
         private UsuarioTbl autenticarUsuario(UsuarioTbl login){
-            var usuario = context.UsuarioTbl.FirstOrDefault(user => user.UsuarioEmail == login.UsuarioEmail && user.UsuarioSenha == login.UsuarioSenha);
+            var usuario = context.UsuarioTbl.Include(u => u.UsuarioTipo).FirstOrDefault(user => user.UsuarioEmail == login.UsuarioEmail && user.UsuarioSenha == login.UsuarioSenha);
 
 
             return usuario;
@@ -53,6 +55,7 @@ namespace EventShareBackend.Controllers
                 new Claim(JwtRegisteredClaimNames.NameId, infousuario.UsuarioNome),
                 new Claim(JwtRegisteredClaimNames.Email, infousuario.UsuarioEmail),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, infousuario.UsuarioTipo.TipoNome),
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"], 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventShareBackend_master.Repositories;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PROJETO.Models;
@@ -13,7 +14,8 @@ namespace EventShareBackend_master.Controllers
     {
         EventShareContext context = new EventShareContext();
         StatusRepositorio repositorio = new StatusRepositorio();
-        
+
+        [EnableCors]
         [HttpGet]
         public async Task<ActionResult<List<EventoStatusTbl>>> Get()
         {
@@ -25,8 +27,10 @@ namespace EventShareBackend_master.Controllers
             {
                  throw;
             }
-         }
-       [HttpGet("{nome}")]
+        }
+
+        [EnableCors]
+        [HttpGet("{nome}")]
        public async Task<ActionResult<EventoStatusTbl>> Get(string nome)
        {
            EventoStatusTbl eventoRetornada = await context.EventoStatusTbl.FirstOrDefaultAsync(s => s.EventoStatusNome == nome);

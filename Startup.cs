@@ -50,6 +50,16 @@ namespace PROJETO
                 };  
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                builder =>
+                {
+                    builder.WithOrigins("*").WithHeaders("X-custom-header").WithMethods("Get, Post, Put, Delete");
+                });
+            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,12 +72,13 @@ namespace PROJETO
 
             app.UseAuthentication();
 
-           
+            app.UseCors();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-             app.UseAuthorization();
+            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
