@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
 using PROJETO.Repositories;
+using tst.Repositorio;
 
 namespace PROJETO.Controllers {
     [ApiController]
@@ -12,6 +14,8 @@ namespace PROJETO.Controllers {
     [Produces ("application/json")]
     public class EventoTblController : ControllerBase {
         EventoTblRepositorio repositorio = new EventoTblRepositorio ();
+
+        UploadRepositorio upload = new UploadRepositorio();
 
         /// <summary>
         /// Método para listar todos os eventos existentes
@@ -99,8 +103,22 @@ namespace PROJETO.Controllers {
         [EnableCors]
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<EventoTbl>> Post (EventoTbl evento) {
+        public async Task<ActionResult<EventoTbl>> Post ([FromForm]EventoTbl evento) {
             try {
+
+                var arquivo = Request.Form.Files[0];
+                evento.EventoImagem = upload.Upload(arquivo, "images");
+                evento.EventoNome = Request.Form["EventoNome"];
+                evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
+                evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
+                evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
+                evento.EventoDescricao = Request.Form["EventoDescricao"];
+                evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
+                evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
+                evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
+                evento.CriadorUsuarioId = int.Parse(Request.Form["EventoCriadorUsuarioId"]);
+                evento.ResponsavelUsuarioId = int.Parse(Request.Form["ResponsavelUsuarioId"]);
+
                 return await repositorio.Post (evento);
             } catch (System.Exception) {
                 throw;

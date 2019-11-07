@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PROJETO.Models;
+using tst.Repositorio;
 
 namespace EventShareBackEnd.Controllers
 {
@@ -18,6 +19,8 @@ namespace EventShareBackEnd.Controllers
         EventShareContext context = new EventShareContext();
 
         UsuarioTblRepositorio repositorio = new UsuarioTblRepositorio();
+
+        UploadRepositorio upload = new UploadRepositorio();
 
         /// <summary>
         /// Método para listar os usuário cadastrados
@@ -66,7 +69,7 @@ namespace EventShareBackEnd.Controllers
         [EnableCors]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
+        public async Task<ActionResult<UsuarioTbl>> Post([FromForm] UsuarioTbl usuario)
         {
             if(!ModelState.IsValid){
                 return BadRequest();
@@ -82,6 +85,15 @@ namespace EventShareBackEnd.Controllers
 
             try
             {
+                var arquivo = Request.Form.Files[0];
+                usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+                usuario.UsuarioNome = Request.Form["UsuarioNome"];
+                usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+                usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+                usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+                usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+
+
                 await repositorio.Post(usuario);
                 return usuario;
             }
