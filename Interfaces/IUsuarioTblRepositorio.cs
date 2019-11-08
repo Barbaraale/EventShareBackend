@@ -12,7 +12,7 @@ namespace EventShareBackEnd.Interfaces
 
         Task<UsuarioTbl> Post(UsuarioTbl usuario);
 
-        Task<UsuarioTbl> Put(int id, UsuarioTbl usuario);
+        Task<UsuarioTbl> Put(UsuarioTbl usuario);
 
         Task<UsuarioTbl> Delete(int id);
     }

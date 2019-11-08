@@ -119,7 +119,7 @@ namespace PROJETO.Controllers {
                 evento.CriadorUsuarioId = int.Parse(Request.Form["EventoCriadorUsuarioId"]);
                 evento.ResponsavelUsuarioId = int.Parse(Request.Form["ResponsavelUsuarioId"]);
 
-                return await repositorio.Post (evento);
+                return await repositorio.Post(evento);
             } catch (System.Exception) {
                 throw;
             }
@@ -129,20 +129,35 @@ namespace PROJETO.Controllers {
         /// Método para atualizar informaçoes de um evento previamente cadastrado
         /// </summary>
         /// <returns>Retorna o evento relacionado ao ID</returns>
-        /// <param name="id"></param>
         /// <param name="evento"></param>
         [EnableCors]
         [Authorize]
-        [HttpPut ("{id}")]
-        public async Task<ActionResult<EventoTbl>> Put (int id, EventoTbl evento) {
+        [HttpPut]
+        public async Task<ActionResult<EventoTbl>> Put([FromForm]EventoTbl evento) {
             try {
-                return await repositorio.Put (id, evento);
+
+                var arquivo = Request.Form.Files[0];
+                evento.EventoId = int.Parse(Request.Form["EventoId"]);
+                evento.EventoImagem = upload.Upload(arquivo, "images");
+                evento.EventoNome = Request.Form["EventoNome"];
+                evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
+                evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
+                evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
+                evento.EventoDescricao = Request.Form["EventoDescricao"];
+                evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
+                evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
+
+                return await repositorio.Put (evento);
+
             } catch (System.Exception) {
-                var eventoRetornado = await repositorio.BuscarPorId (id);
+
+                var eventoRetornado = await repositorio.BuscarPorId(evento.EventoId);
                 if (eventoRetornado == null) {
                     return NotFound ();
                 } else {
+
                     throw;
+
                 }
             }
         }

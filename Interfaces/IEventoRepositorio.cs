@@ -14,7 +14,7 @@ namespace PROJETO.Interfaces
         Task<List<EventoTbl>> BuscarPorCategoria(string categoria);
         Task<List<EventoTbl>> BuscarPorStatus(string status);
         Task<EventoTbl> Post(EventoTbl evento);
-        Task<EventoTbl> Put(int id, EventoTbl evento);
+        Task<EventoTbl> Put(EventoTbl evento);
         Task<EventoTbl> DeletarEvento(int id);
         Task<EventoTbl> UploadImagem(string imagem);
     }

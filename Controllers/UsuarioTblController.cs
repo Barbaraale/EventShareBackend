@@ -107,20 +107,29 @@ namespace EventShareBackEnd.Controllers
         /// Método para atualizar dados de um usuário cadastrado
         /// </summary>
         /// <returns>Retorna o usuario</returns>
-        ///<param name="id"></param>
         /// <param name="usuario"></param>
         [EnableCors]
-        [Authorize]
-        [HttpPut("{id}")]
-        public async Task<ActionResult<UsuarioTbl>> Put(int id, UsuarioTbl usuario)
+        // [Authorize]
+        [HttpPut]
+        public async Task<ActionResult<UsuarioTbl>> Put([FromForm]UsuarioTbl usuario)
         {
             try
             {
-                return await repositorio.Put(id, usuario);   
+
+                var arquivo = Request.Form.Files[0];
+                usuario.UsuarioId = int.Parse(Request.Form["UsuarioId"]);
+                usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+                usuario.UsuarioNome = Request.Form["UsuarioNome"];
+                usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+                usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+                usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+                usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+
+                return await repositorio.Put (usuario);   
             }
             catch (System.Exception)
             {
-                var usuarioAlterado = await repositorio.Get(id);
+                var usuarioAlterado = await repositorio.Get(usuario.UsuarioId);
                 if(usuarioAlterado == null)
                 {
                     return NotFound();
