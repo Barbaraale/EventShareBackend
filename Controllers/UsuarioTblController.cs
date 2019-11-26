@@ -148,7 +148,7 @@ namespace EventShareBackEnd.Controllers
         /// <returns>Retorna o usuario deletado</returns>
         ///<param name="id"></param>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<UsuarioTbl>> Delete(int id)
         {

@@ -61,7 +61,7 @@ namespace EventShareBackend_master.Controllers
         /// <returns>Retorna categoria criada</returns>
         /// <param name="categoria"></param>
         [EnableCors]
-        [Authorize(Roles = "Administrador")]
+        // [Authorize(Roles = "Administrador")]
         [HttpPost]
        public async Task<ActionResult<EventoCategoriaTbl>> Post(EventoCategoriaTbl categoria)
        {
@@ -83,7 +83,7 @@ namespace EventShareBackend_master.Controllers
         /// <param name="id"></param>
         /// <param name="categoria"></param>
        [EnableCors]
-       [Authorize(Roles = "Administrador")]
+    //    [Authorize(Roles = "Administrador")]
        [HttpPut("{id}")]
        public async Task<ActionResult> Put(int id, EventoCategoriaTbl categoria)
        {
@@ -106,7 +106,7 @@ namespace EventShareBackend_master.Controllers
         /// <returns>Retorna categoria deletada</returns>
         /// <param name="id"></param>
        [EnableCors]
-       [Authorize(Roles = "Administrador")]
+    //    [Authorize(Roles = "Administrador")]
        [HttpDelete("{id}")]
        public async Task<ActionResult<EventoCategoriaTbl>> Delete(int id)
        {
