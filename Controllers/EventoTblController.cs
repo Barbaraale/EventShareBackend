@@ -88,7 +88,7 @@ namespace PROJETO.Controllers {
         /// <returns>Retorna a lista de eventos</returns>
         /// <param name="status"></param>
         [EnableCors]
-        [Authorize(Roles = "Administrador")]
+        // [Authorize(Roles = "Administrador")]
         [HttpGet ("status/(status)")]
         public async Task<List<EventoTbl>> GetStatus (string status){
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorStatus(status);
@@ -101,7 +101,7 @@ namespace PROJETO.Controllers {
         /// <returns>Retorna o evento criado</returns>
         /// <param name="evento"></param>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         public async Task<ActionResult<EventoTbl>> Post ([FromForm]EventoTbl evento) {
             try {
@@ -131,7 +131,7 @@ namespace PROJETO.Controllers {
         /// <returns>Retorna o evento relacionado ao ID</returns>
         /// <param name="evento"></param>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpPut]
         public async Task<ActionResult<EventoTbl>> Put([FromForm]EventoTbl evento) {
             try {
@@ -168,7 +168,7 @@ namespace PROJETO.Controllers {
         /// <returns>Retorna o evento deletado</returns>
         /// <param name="id"></param>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpDelete ("{id}")]
         public async Task<ActionResult<EventoTbl>> Delete (int id) {
             try {

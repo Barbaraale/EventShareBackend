@@ -21,7 +21,7 @@ namespace EventShareBackend_master.Controllers
         /// </summary>
         /// <returns>Retorna lista de tipos usuarios</returns>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<UsuarioTipoTbl>>> Get() 
         {
@@ -38,7 +38,7 @@ namespace EventShareBackend_master.Controllers
         /// <returns>Retorna o tipo de usuário</returns>
         ///<param name="id"></param>
         [EnableCors]
-        [Authorize]
+        // [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<UsuarioTipoTbl>> Get(int id) 
         {
