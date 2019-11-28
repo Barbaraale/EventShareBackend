@@ -51,11 +51,10 @@ namespace EventShareBackEnd.Controllers
         public async Task<ActionResult<UsuarioTbl>> Get(int id)
         {
             UsuarioTbl usuario = await repositorio.Get(id);
-            
 
-            if (usuario == null)
+            if(usuario == null)
             {
-                return  NotFound();
+                return NotFound("Usuário não encontrado.");
             }
 
             return usuario;
@@ -77,47 +76,39 @@ namespace EventShareBackEnd.Controllers
             }            
 
             if(!usuario.UsuarioEmail.Contains('@') || !usuario.UsuarioEmail.Contains('.')){
-                return BadRequest("Email inválido");
+                throw new System.ArgumentException("E-mail inválido.");
             }
 
             if(usuario.UsuarioSenha.Length < 8){
-                return BadRequest("Senha possui menos de 8 caracteres");
+                throw new System.ArgumentException("A senha possui menos de 8 caracteres");
             }
 
-            try
-            {
-                // var arquivo = Request.Form.Files[0];
-                // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
-                usuario.UsuarioNome = Request.Form["UsuarioNome"];
-                if(usuario.UsuarioNome == null){
-                    return BadRequest("Campo Nome é necessário.");
-                }
-
-                usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
-                if(usuario.UsuarioEmail == null){
-                    return BadRequest("Campo E-mail é necessário.");
-                }
-
-                usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
-
-                usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
-                if(usuario.UsuarioSenha == null){
-                    return BadRequest("Campo Senha é necessário.");
-                }
-
-                usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
-                if(usuario.UsuarioTipoId == null){
-                    return BadRequest("Campo do Tipo de Usuário é necessário.");
-                }
-
-
-                await repositorio.Post(usuario);
-                return usuario;
+            // var arquivo = Request.Form.Files[0];
+            // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+            usuario.UsuarioNome = Request.Form["UsuarioNome"];
+            if(usuario.UsuarioNome == null){
+                throw new System.ArgumentNullException("Campo Nome é obrigatório.");
             }
-            catch (System.Exception)
-            {
-                throw;
+
+            usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+            if(usuario.UsuarioEmail == null){
+                throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
             }
+
+            usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+
+            usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+            if(usuario.UsuarioSenha == null){
+                throw new System.ArgumentNullException("Campo Senha é obrigatório.");
+            }
+
+            usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+            if(usuario.UsuarioTipoId == null){
+                throw new System.ArgumentNullException("Tipo do usuário não pode ser nulo.");
+            }
+
+            await repositorio.Post(usuario);
+            return Ok("Usuário cadastrado!\n" + usuario);
         }
 
         /// <summary>
@@ -130,33 +121,49 @@ namespace EventShareBackEnd.Controllers
         [HttpPut]
         public async Task<ActionResult<UsuarioTbl>> Put([FromForm]UsuarioTbl usuario)
         {
-            try
-            {
-
-                var arquivo = Request.Form.Files[0];
-                usuario.UsuarioId = int.Parse(Request.Form["UsuarioId"]);
-                usuario.UsuarioImagem = upload.Upload(arquivo, "images");
-                usuario.UsuarioNome = Request.Form["UsuarioNome"];
-                usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
-                usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
-                usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
-                usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
-
-                return await repositorio.Put (usuario);   
+            var usuarioAlterado = await repositorio.Get(usuario.UsuarioId);
+            if(usuarioAlterado == null){
+                return NotFound("Usuário não encontrado.");
             }
-            catch (System.Exception)
-            {
-                var usuarioAlterado = await repositorio.Get(usuario.UsuarioId);
-                if(usuarioAlterado == null)
-                {
-                    return NotFound();
 
-                }else{
-                    
-                    throw;
-                      
-                }
+            if(usuarioAlterado.UsuarioId != usuario.UsuarioId){
+                return BadRequest("Id inválida");
             }
+
+            // var arquivo = Request.Form.Files[0];
+            usuario.UsuarioId = usuarioAlterado.UsuarioId;
+            // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+
+            usuario.UsuarioNome = Request.Form["UsuarioNome"];
+            if(usuario.UsuarioNome == null){
+                throw new System.ArgumentNullException("Campo Nome é obrigatório.");
+            }
+                
+            usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+            if(usuario.UsuarioEmail == null){
+                throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
+            }
+
+            usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+            if(usuario.UsuarioComunidade == null){
+                throw new System.ArgumentNullException("Digite o nome da comunidade.");
+            }
+
+            usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+            if(usuario.UsuarioTipoId == null){
+                throw new System.ArgumentNullException("O campo tipo é obrigatório");
+            }
+
+            usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+            if(usuario.UsuarioSenha == null){
+                throw new System.ArgumentNullException("O campo Senha é obrigatório");
+            }else if(usuario.UsuarioSenha.Length < 8){
+                throw new System.ArgumentException("A senha possui menos de 8 caracteres");
+            }else if(usuarioAlterado.UsuarioSenha == usuario.UsuarioSenha){
+                throw new System.ArgumentException("A senha digitada é igual a senha atual.");
+            }
+
+            return await repositorio.Put(usuario);   
         }
 
         /// <summary>
@@ -172,7 +179,7 @@ namespace EventShareBackEnd.Controllers
             UsuarioTbl usuarioDeletado = await repositorio.Delete(id);
 
             if(usuarioDeletado == null){
-                return NotFound();
+                return NotFound("Usuário não encontrado!");
             }
             
             return usuarioDeletado;

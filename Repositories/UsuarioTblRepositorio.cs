@@ -55,12 +55,14 @@ namespace EventShareBackEnd.Repositories
         {
             UsuarioTbl usuarioModificado = await context.UsuarioTbl.FindAsync(usuario.UsuarioId);
 
-            // usuarioModificado.UsuarioNome = usuario.UsuarioNome;
-            // usuarioModificado.UsuarioEmail = usuario.UsuarioEmail;
-            // usuarioModificado.UsuarioComunidade = usuario.UsuarioComunidade;
-            // usuarioModificado.UsuarioSenha = usuario.UsuarioSenha;
+            usuarioModificado.UsuarioId = usuario.UsuarioId;
+            usuarioModificado.UsuarioNome = usuario.UsuarioNome;
+            usuarioModificado.UsuarioEmail = usuario.UsuarioEmail;
+            usuarioModificado.UsuarioComunidade = usuario.UsuarioComunidade;
+            usuarioModificado.UsuarioSenha = usuario.UsuarioSenha;
+            usuarioModificado.UsuarioTipoId = usuario.UsuarioTipoId;
 
-            context.Entry(usuarioModificado).State = EntityState.Modified;
+            // context.Entry(usuarioModificado).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return usuarioModificado;
         }
