@@ -10,13 +10,6 @@
             </summary>
             <returns>Retorna a lista de categorias</returns>
         </member>
-        <member name="M:EventShareBackend_master.Controllers.CategoriaController.Get(System.String)">
-            <summary>
-            Método lista eventos pela sua categoria
-            </summary>
-            <returns>Retorna a lista de categorias</returns>
-            <param name="categoriaNome"></param>
-        </member>
         <member name="M:EventShareBackend_master.Controllers.CategoriaController.Post(PROJETO.Models.EventoCategoriaTbl)">
             <summary>
             Método para criar uma nova categoria, acesso restrito ao administrador

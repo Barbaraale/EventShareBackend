@@ -71,27 +71,44 @@ namespace EventShareBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<UsuarioTbl>> Post([FromForm] UsuarioTbl usuario)
         {
-            if(!ModelState.IsValid){
-                return BadRequest();
-            }
+             
+            if(await repositorio.ValidaEmail(usuario)){
+                return BadRequest("Esse E-mail já foi cadastrado");
+            }            
 
             if(!usuario.UsuarioEmail.Contains('@') || !usuario.UsuarioEmail.Contains('.')){
-                return BadRequest();
+                return BadRequest("Email inválido");
             }
 
             if(usuario.UsuarioSenha.Length < 8){
-                return BadRequest();
+                return BadRequest("Senha possui menos de 8 caracteres");
             }
 
             try
             {
-                var arquivo = Request.Form.Files[0];
-                usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+                // var arquivo = Request.Form.Files[0];
+                // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
                 usuario.UsuarioNome = Request.Form["UsuarioNome"];
+                if(usuario.UsuarioNome == null){
+                    return BadRequest("Campo Nome é necessário.");
+                }
+
                 usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+                if(usuario.UsuarioEmail == null){
+                    return BadRequest("Campo E-mail é necessário.");
+                }
+
                 usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+
                 usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+                if(usuario.UsuarioSenha == null){
+                    return BadRequest("Campo Senha é necessário.");
+                }
+
                 usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+                if(usuario.UsuarioTipoId == null){
+                    return BadRequest("Campo do Tipo de Usuário é necessário.");
+                }
 
 
                 await repositorio.Post(usuario);

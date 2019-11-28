@@ -23,11 +23,6 @@ namespace EventShareBackend_master.Repositories
             return await context.EventoCategoriaTbl.ToListAsync();
         }
 
-        public async Task<EventoCategoriaTbl> Get(string CategoriaNome)
-        {
-           return await context.EventoCategoriaTbl.FindAsync(CategoriaNome);
-        }
-
         public async Task<EventoCategoriaTbl> Post(EventoCategoriaTbl categoria)
         {
             categoria.CategoriaNome.ToLower();

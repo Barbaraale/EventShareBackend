@@ -8,7 +8,6 @@ namespace EventShareBackend_master.Interfaces
     {
        Task<List<EventoCategoriaTbl>> Get();
 
-        Task<EventoCategoriaTbl> Get(string CategoriaNome);
 
         Task<EventoCategoriaTbl> Post(EventoCategoriaTbl categoria);
 

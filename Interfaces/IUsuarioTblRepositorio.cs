@@ -10,6 +10,8 @@ namespace EventShareBackEnd.Interfaces
 
         Task<UsuarioTbl> Get(int id);
 
+        Task<bool> ValidaEmail(UsuarioTbl usuario);
+
         Task<UsuarioTbl> Post(UsuarioTbl usuario);
 
         Task<UsuarioTbl> Put(UsuarioTbl usuario);

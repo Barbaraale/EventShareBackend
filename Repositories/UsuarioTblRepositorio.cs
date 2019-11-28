@@ -29,13 +29,22 @@ namespace EventShareBackEnd.Repositories
             return await context.UsuarioTbl.FindAsync(id);
         }
 
+        public async Task<bool> ValidaEmail(UsuarioTbl usuario){
+            UsuarioTbl usuarioExiste = await context.UsuarioTbl.FirstOrDefaultAsync(u => u.UsuarioEmail == usuario.UsuarioEmail);
+
+            if(usuarioExiste == null){
+                return false;
+            }
+
+            return true;
+        }
 
         public async Task<UsuarioTbl> Post(UsuarioTbl usuario)
         {
+           
 
             UsuarioTbl usuarioCadastrado = usuario;
             usuarioCadastrado.UsuarioNome = usuario.UsuarioNome.ToLower();
-
 
             await context.UsuarioTbl.AddAsync(usuarioCadastrado);
             await context.SaveChangesAsync();

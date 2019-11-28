@@ -36,24 +36,7 @@ namespace EventShareBackend_master.Controllers
                 throw;
             }            
         }
-
-        /// <summary>
-        /// Método lista eventos pela sua categoria
-        /// </summary>
-        /// <returns>Retorna a lista de categorias</returns>
-        /// <param name="categoriaNome"></param>
-        [EnableCors]
-        [AllowAnonymous]
-        [HttpGet("{CategoriaNome}")]
-       public async Task<ActionResult<EventoCategoriaTbl>> Get(string categoriaNome)
-       {
-          EventoCategoriaTbl categoriaRetornada = await context.EventoCategoriaTbl.Where(c => c.CategoriaNome.Contains(categoriaNome)).FirstOrDefaultAsync();
-           if(categoriaRetornada == null)
-           {
-               return NotFound();
-           }
-           return categoriaRetornada;
-       }
+    
 
         /// <summary>
         /// Método para criar uma nova categoria, acesso restrito ao administrador

@@ -19,7 +19,7 @@ namespace PROJETO.Models
         public int UsuarioId { get; set; }
         
         [Column("usuario_nome")]
-        [Required]
+        // [Required]
         [StringLength(50)]
         public string UsuarioNome { get; set; }
         
@@ -37,12 +37,12 @@ namespace PROJETO.Models
         public string UsuarioComunidade { get; set; }
         
         [Column("usuario_senha")]
-        [Required]
+        // [Required]
         [StringLength(255)]
         public string UsuarioSenha { get; set; }
         
         [Column("usuario_tipo_id")]
-        [Required]
+        // [Required]
         public int? UsuarioTipoId { get; set; }
 
         [Column("usuario_imagem")]
