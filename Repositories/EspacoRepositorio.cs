@@ -13,6 +13,7 @@ namespace EventShareBackend_master.Repositories
         public async Task<List<EventoEspacoTbl>> Get()
         {
             List<EventoEspacoTbl> listaDeEspaco = await context.EventoEspacoTbl.ToListAsync();
+
             return listaDeEspaco;
         }
 
@@ -26,11 +27,16 @@ namespace EventShareBackend_master.Repositories
 
             bool ans = espaco.EspacoLivre;
             
-            if(ans == true){
-                return true;
-            }
-        
-            return false;
+            return ans;
+        }
+
+        public async Task<EventoEspacoTbl> PutEspacoLivre(int id, EventoEspacoTbl espaco){
+            EventoEspacoTbl espacoEncontrado = await context.EventoEspacoTbl.FindAsync(id);
+
+            espacoEncontrado.EspacoLivre = espaco.EspacoLivre;
+
+            await context.SaveChangesAsync();
+            return espacoEncontrado;
         }
     }
 }

@@ -27,7 +27,6 @@ namespace EventShareBackend_master.Controllers
        public async Task<ActionResult<List<EventoEspacoTbl>>> Get()
        {
            List<EventoEspacoTbl> listadeEspaco = await repositorio.Get();
-
            return listadeEspaco;
        }
 
@@ -50,5 +49,15 @@ namespace EventShareBackend_master.Controllers
            return EspacoRetornada;
        }
 
+        [EnableCors]
+        // [Authorize]
+        [HttpGet("info/{id}")]
+        public async Task<ActionResult<bool>> VerificarEspaco(int id){
+            if(await repositorio.VerificaEspaco(id)){
+                return Ok(true);
+            }
+
+            return Ok(false);
+        }
     }
 }

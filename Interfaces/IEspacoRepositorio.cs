@@ -10,7 +10,9 @@ namespace EventShareBackend_master.Interfaces
 
         Task<EventoEspacoTbl> Get(int id);
 
-        Task<bool> VerificaEspaco(int id); 
+        Task<bool> VerificaEspaco(int id);
+
+        // Task<EventoEspacoTbl> PutEspacoLivre(int id); 
 
     }
 }
