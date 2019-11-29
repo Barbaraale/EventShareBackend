@@ -71,7 +71,7 @@ namespace EventShareBackEnd.Repositories
         {
             UsuarioTbl usuario = await context.UsuarioTbl.FindAsync(id);
 
-            if (usuario == null)
+            if(usuario == null)
             {
                 return null;
             }

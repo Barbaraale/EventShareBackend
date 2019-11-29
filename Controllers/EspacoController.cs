@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventShareBackend_master.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ namespace EventShareBackend_master.Controllers
     public class EspacoController : ControllerBase
     {
       EventShareContext context = new EventShareContext();
+      EspacoRepositorio repositorio = new EspacoRepositorio();
         
         /// <summary>
         /// Método para listar os espaços e eventos
@@ -24,11 +26,7 @@ namespace EventShareBackend_master.Controllers
         [HttpGet]
        public async Task<ActionResult<List<EventoEspacoTbl>>> Get()
        {
-           List<EventoEspacoTbl> listadeEspaco = await context.EventoEspacoTbl.ToListAsync();
-           if(listadeEspaco == null)
-           {
-               return NotFound();
-           }
+           List<EventoEspacoTbl> listadeEspaco = await repositorio.Get();
 
            return listadeEspaco;
        }
@@ -43,12 +41,14 @@ namespace EventShareBackend_master.Controllers
         [HttpGet("{id}")]
        public async Task<ActionResult<EventoEspacoTbl>> Get(int id)
        {
-           EventoEspacoTbl EspacoRetornada = await context.EventoEspacoTbl.FindAsync(id);
+           EventoEspacoTbl EspacoRetornada = await repositorio.Get(id);
            if(EspacoRetornada == null)
            {
-               return NotFound();
+               return NotFound("Espaço não encontrado.");
            }
+
            return EspacoRetornada;
-       }  
+       }
+
     }
 }

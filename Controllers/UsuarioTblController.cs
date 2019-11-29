@@ -85,6 +85,7 @@ namespace EventShareBackEnd.Controllers
 
             // var arquivo = Request.Form.Files[0];
             // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
+
             usuario.UsuarioNome = Request.Form["UsuarioNome"];
             if(usuario.UsuarioNome == null){
                 throw new System.ArgumentNullException("Campo Nome é obrigatório.");

@@ -14,8 +14,5 @@ namespace EventShareBackend_master.Repositories
         {
             return await context.EventoStatusTbl.ToListAsync();
         }
-
-
-        
     }
 }

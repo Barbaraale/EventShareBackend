@@ -6,9 +6,11 @@ namespace EventShareBackend_master.Interfaces
 {
     public interface IEspacoRepositorio
     {
-    Task<List<EventoEspacoTbl>> Get();
+        Task<List<EventoEspacoTbl>> Get();
 
-    Task<EventoEspacoTbl> Get(int id);
+        Task<EventoEspacoTbl> Get(int id);
+
+        Task<bool> VerificaEspaco(int id); 
 
     }
 }

@@ -21,7 +21,8 @@
             <summary>
             Método para atualizar uma categoria existente, acesso restrito ao administrador
             </summary>
-            <returns>Retorna categoria atualizada</returns>
+            <returns>Retorna categoria atualizada</returns
+            >
             <param name="id"></param>
             <param name="categoria"></param>
         </member>

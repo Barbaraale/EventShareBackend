@@ -20,6 +20,9 @@ namespace PROJETO.Models
         [StringLength(50)]
         public string EspacoNome { get; set; }
 
+        [Column("espaco_livre")]
+        public bool EspacoLivre { get; set; }
+
         [InverseProperty("EventoEspaco")]
         public virtual ICollection<EventoTbl> EventoTbl { get; set; }
     }

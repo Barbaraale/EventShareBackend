@@ -34,7 +34,7 @@ namespace EventShareBackend.Controllers
         [AllowAnonymous]
         [HttpPost]
         public IActionResult Login(UsuarioTbl login){
-            IActionResult resposta = Unauthorized();
+            IActionResult resposta = Unauthorized("Login não autorizado.");
 
             var usuario = autenticarUsuario(login);
 

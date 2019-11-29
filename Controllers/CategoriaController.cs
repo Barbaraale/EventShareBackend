@@ -28,11 +28,8 @@ namespace EventShareBackend_master.Controllers
         public async Task<ActionResult<List<EventoCategoriaTbl>>> Get()
         {
             try{
-
                 return await repositorio.Get();
-
-            }catch(System.Exception)
-            {
+            }catch(System.Exception){
                 throw;
             }            
         }
@@ -47,22 +44,21 @@ namespace EventShareBackend_master.Controllers
         // [Authorize(Roles = "Administrador")]
         [HttpPost]
        public async Task<ActionResult<EventoCategoriaTbl>> Post(EventoCategoriaTbl categoria)
-       {
-           try
-           {
-               return await repositorio.Post(categoria);
-           }
-           catch (System.Exception)
-           {
-               
-               throw;
-           }
+       {    
+           if(categoria.CategoriaNome == null || categoria.CategoriaNome.Length == 0){
+               throw new System.ArgumentNullException("A categoria deve ter um nome");
+           }else if(categoria.CategoriaNome.Length < 3){
+               throw new System.ArgumentException("Nome da categoria deve conter um mínimo de 3 caracteres");
+           }       
+
+           return  await repositorio.Post(categoria);
        }
 
         /// <summary>
         /// Método para atualizar uma categoria existente, acesso restrito ao administrador
         /// </summary>
-        /// <returns>Retorna categoria atualizada</returns>
+        /// <returns>Retorna categoria atualizada</returns
+        /// >
         /// <param name="id"></param>
         /// <param name="categoria"></param>
        [EnableCors]
@@ -70,16 +66,22 @@ namespace EventShareBackend_master.Controllers
        [HttpPut("{id}")]
        public async Task<ActionResult> Put(int id, EventoCategoriaTbl categoria)
        {
-           EventoCategoriaTbl categoriaRetornada = await context.EventoCategoriaTbl.FindAsync(id);
-          if(categoriaRetornada == null)
-          {
-              return NotFound();
-          }
-          categoriaRetornada.CategoriaNome = categoria.CategoriaNome;
-          context.EventoCategoriaTbl.Update(categoriaRetornada);
-          await context.SaveChangesAsync();
+            EventoCategoriaTbl categoriaRetornada = await repositorio.Get(id);
 
-          return Ok();
+            if(categoriaRetornada == null)
+            {
+                return NotFound("Categoria não encontrada.");
+            } 
+
+            if(categoriaRetornada.CategoriaId != categoria.CategoriaId){
+                return BadRequest("Id inválido");
+            }
+
+            categoriaRetornada.CategoriaNome = categoria.CategoriaNome;
+            context.EventoCategoriaTbl.Update(categoriaRetornada);
+            await context.SaveChangesAsync();
+
+            return Ok("Categoria atualizada com sucesso.");
 
        }
 
@@ -93,15 +95,16 @@ namespace EventShareBackend_master.Controllers
        [HttpDelete("{id}")]
        public async Task<ActionResult<EventoCategoriaTbl>> Delete(int id)
        {
-           EventoCategoriaTbl categoriaRetornada = await context.EventoCategoriaTbl.FindAsync(id);
+           EventoCategoriaTbl categoriaRetornada = await repositorio.Get(id);
            if (categoriaRetornada == null)
            {
-               return NotFound();
+               return NotFound("Categoria não encontrada.");
            }
+
            context.EventoCategoriaTbl.Remove(categoriaRetornada);
            await context.SaveChangesAsync();
 
-           return categoriaRetornada;
+           return Ok("Categoria deletada com sucesso.");
 
        }
     }
