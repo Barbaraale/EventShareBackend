@@ -70,7 +70,6 @@ namespace EventShareBackEnd.Controllers
         [HttpPost]
         public async Task<ActionResult<UsuarioTbl>> Post([FromForm] UsuarioTbl usuario)
         {
-             
             if(await repositorio.ValidaEmail(usuario)){
                 return BadRequest("Esse E-mail já foi cadastrado");
             }            
@@ -109,7 +108,7 @@ namespace EventShareBackEnd.Controllers
             }
 
             await repositorio.Post(usuario);
-            return Ok("Usuário cadastrado!\n" + usuario);
+            return Ok("Usuário cadastrado!");
         }
 
         /// <summary>

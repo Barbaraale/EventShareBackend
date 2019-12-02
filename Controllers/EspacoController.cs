@@ -48,16 +48,21 @@ namespace EventShareBackend_master.Controllers
 
            return EspacoRetornada;
        }
+       
+        // /// <summary>
+        // /// Método para verificar se o espaço está livre
+        // /// </summary>
+        // /// <returns>Retorna verdadeiro se o espaço está livre, caso contrário retorna falso.</returns>
+        // /// <param name="id"></param>
+        // [EnableCors]
+        // // [Authorize]
+        // [HttpGet("info/{id}")]
+        // public async Task<ActionResult<bool>> VerificarEspaco(int id){
+        //     if(await repositorio.VerificaEspaco(id)){
+        //         return Ok(true);
+        //     }
 
-        [EnableCors]
-        // [Authorize]
-        [HttpGet("info/{id}")]
-        public async Task<ActionResult<bool>> VerificarEspaco(int id){
-            if(await repositorio.VerificaEspaco(id)){
-                return Ok(true);
-            }
-
-            return Ok(false);
-        }
+        //     return Ok(false);
+        // }
     }
 }

@@ -22,21 +22,12 @@ namespace EventShareBackend_master.Repositories
             return await context.EventoEspacoTbl.FindAsync(id);
         }
 
-        public async Task<bool> VerificaEspaco(int id){
-            EventoEspacoTbl espaco = await context.EventoEspacoTbl.FindAsync(id);
-
-            bool ans = espaco.EspacoLivre;
+        // public async Task<bool> VerificaEspaco(int id){
             
-            return ans;
-        }
+        // }
 
-        public async Task<EventoEspacoTbl> PutEspacoLivre(int id, EventoEspacoTbl espaco){
-            EventoEspacoTbl espacoEncontrado = await context.EventoEspacoTbl.FindAsync(id);
-
-            espacoEncontrado.EspacoLivre = espaco.EspacoLivre;
-
-            await context.SaveChangesAsync();
-            return espacoEncontrado;
-        }
+        // public async Task<EventoEspacoTbl> PutEspacoLivre(int id, EventoEspacoTbl espaco){
+            
+        // }
     }
 }

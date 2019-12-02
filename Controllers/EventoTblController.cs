@@ -78,7 +78,20 @@ namespace PROJETO.Controllers {
         [AllowAnonymous]
         [HttpGet ("categoria/{categoria}")]
         public async Task<List<EventoTbl>> GetCategoria (string categoria) {
-            List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria (categoria);
+            List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria(categoria);
+            return listaRetornada;
+        }
+
+        /// <summary>
+        /// Método para listar os eventos de acordo com a data 
+        /// </summary>
+        /// <returns>Retorna a lista de eventos com a data encontrada</returns>
+        /// <param name="data"></param>
+        [EnableCors]
+        [AllowAnonymous]
+        [HttpGet("data/{data}")]
+        public async Task<ActionResult<List<EventoTbl>>> BuscarPorData(DateTime data){
+            List<EventoTbl> listaRetornada = await repositorio.BuscarPorData(data);
             return listaRetornada;
         }
 
@@ -103,11 +116,10 @@ namespace PROJETO.Controllers {
         [EnableCors]
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<EventoTbl>> Post ([FromForm]EventoTbl evento) {
+        public async Task<ActionResult<EventoTbl>> Post([FromForm]EventoTbl evento) {
             try {
-
-                var arquivo = Request.Form.Files[0];
-                evento.EventoImagem = upload.Upload(arquivo, "images");
+                // var arquivo = Request.Form.Files[0];
+                // evento.EventoImagem = upload.Upload(arquivo, "images");
                 evento.EventoNome = Request.Form["EventoNome"];
                 evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
                 evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
@@ -116,12 +128,14 @@ namespace PROJETO.Controllers {
                 evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
                 evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
                 evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
-                evento.CriadorUsuarioId = int.Parse(Request.Form["EventoCriadorUsuarioId"]);
+                evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
                 evento.ResponsavelUsuarioId = int.Parse(Request.Form["ResponsavelUsuarioId"]);
 
                 return await repositorio.Post(evento);
-            } catch (System.Exception) {
+
+            } catch (System.ArgumentException){
                 throw;
+                // return BadRequest("Evento não cadastrado devido à campos inválidos.");
             }
         }
 
@@ -136,9 +150,9 @@ namespace PROJETO.Controllers {
         public async Task<ActionResult<EventoTbl>> Put([FromForm]EventoTbl evento) {
             try {
 
-                var arquivo = Request.Form.Files[0];
+                // var arquivo = Request.Form.Files[0];
+                // evento.EventoImagem = upload.Upload(arquivo, "images");
                 evento.EventoId = int.Parse(Request.Form["EventoId"]);
-                evento.EventoImagem = upload.Upload(arquivo, "images");
                 evento.EventoNome = Request.Form["EventoNome"];
                 evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
                 evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
@@ -147,19 +161,17 @@ namespace PROJETO.Controllers {
                 evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
                 evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
 
-                return await repositorio.Put (evento);
+                return await repositorio.Put(evento);
 
-            } catch (System.Exception) {
-
+            } 
+            catch (System.Exception) {
                 var eventoRetornado = await repositorio.BuscarPorId(evento.EventoId);
                 if (eventoRetornado == null) {
-                    return NotFound ();
+                    return NotFound("Evento não encontrado.");
                 } else {
-
-                    throw;
-
+                    return BadRequest("Impossível cadastrar devido à campos inválidos.");
                 }
-            }
+            } 
         }
 
         /// <summary>
@@ -170,17 +182,19 @@ namespace PROJETO.Controllers {
         [EnableCors]
         // [Authorize]
         [HttpDelete ("{id}")]
-        public async Task<ActionResult<EventoTbl>> Delete (int id) {
+        public async Task<ActionResult<EventoTbl>> Delete(int id) {
             try {
-                return await repositorio.DeletarEvento (id);
-            } catch (System.Exception) {
+                return await repositorio.DeletarEvento(id);
+            } 
+            catch (System.Exception){
                 var eventoRetornado = await repositorio.BuscarPorId (id);
                 if (eventoRetornado == null) {
-                    return NotFound ();
+                    return NotFound("Evento não encontrado.");
                 } else {
                     throw;
                 }
             }
         }
+
     }
 }

@@ -11,9 +11,11 @@ namespace PROJETO.Models
         [Key]
         [Column("evento_id")]
         public int EventoId { get; set; }
+
         [Column("evento_nome")]
         [StringLength(100)]
         public string EventoNome { get; set; }
+        
         [Column("evento_data", TypeName = "date")]
         public DateTime? EventoData { get; set; }
         [Column("evento_horario_comeco")]

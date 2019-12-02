@@ -37,6 +37,11 @@ namespace PROJETO.Repositories
             List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaNome.Contains(categoria)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
             return listaE;
         }
+
+        public async Task<List<EventoTbl>> BuscarPorData(DateTime data){
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoData == data).ToListAsync();
+            return listaE;
+        }
         
         public async Task<List<EventoTbl>> BuscarPorStatus(string status){
             List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoStatus.EventoStatusNome.Contains(status)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
@@ -45,9 +50,6 @@ namespace PROJETO.Repositories
         public async Task<EventoTbl> Post(EventoTbl evento){
         
             EventoTbl eventoCadastrado = evento;
-            eventoCadastrado.EventoNome = evento.EventoNome.ToLower();
-
-            System.Console.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa"+eventoCadastrado.EventoId);
             
             await context.EventoTbl.AddAsync(eventoCadastrado);
             await context.SaveChangesAsync();
