@@ -73,12 +73,21 @@ namespace PROJETO.Controllers {
         /// Método para filtrar os eventos de acordo com sua categoria
         /// </summary>
         /// <returns>Retorna a lista de eventos</returns>
-        /// <param name="categoria"></param>
+        /// <param name="id"></param>
         [EnableCors]
         [AllowAnonymous]
-        [HttpGet ("categoria/{categoria}")]
-        public async Task<List<EventoTbl>> GetCategoria (string categoria) {
-            List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria(categoria);
+        [HttpGet ("categoria/{id}")]
+        public async Task<List<EventoTbl>> BuscarPorCategoria(int id) {
+            List<EventoTbl> listaRetornada = await repositorio.BuscarPorCategoria(id);
+
+             foreach (var evento in listaRetornada) {
+                evento.EventoCategoria.EventoTbl = null;
+                evento.EventoEspaco.EventoTbl = null;
+                evento.EventoStatus.EventoTbl = null;
+                evento.CriadorUsuario.EventoTblCriadorUsuario = null;
+                evento.ResponsavelUsuario.EventoTblResponsavelUsuario = null;
+            }
+
             return listaRetornada;
         }
 
@@ -92,6 +101,7 @@ namespace PROJETO.Controllers {
         [HttpGet("data/{data}")]
         public async Task<ActionResult<List<EventoTbl>>> BuscarPorData(DateTime data){
             List<EventoTbl> listaRetornada = await repositorio.BuscarPorData(data);
+
             return listaRetornada;
         }
 

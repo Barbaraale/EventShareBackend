@@ -23,7 +23,7 @@ namespace EventShareBackend_master.Repositories
         }
 
         // public async Task<bool> VerificaEspaco(int id){
-            
+               
         // }
 
         // public async Task<EventoEspacoTbl> PutEspacoLivre(int id, EventoEspacoTbl espaco){

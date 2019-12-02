@@ -46,13 +46,6 @@
             <returns>Retorna o evento</returns>
             <param name="id"></param>
         </member>
-        <member name="M:EventShareBackend_master.Controllers.EspacoController.VerificarEspaco(System.Int32)">
-            <summary>
-            Método para verificar se o espaço está livre
-            </summary>
-            <returns>Retorna verdadeiro se o espaço está livre, caso contrário retorna falso.</returns>
-            <param name="id"></param>
-        </member>
         <member name="M:EventShareBackend_master.Controllers.StatusController.Get">
             <summary>
             Método para listar os status existentes
@@ -92,12 +85,12 @@
             <returns>Retorna a lista de eventos</returns>
             <param name="nome"></param>
         </member>
-        <member name="M:PROJETO.Controllers.EventoTblController.GetCategoria(System.String)">
+        <member name="M:PROJETO.Controllers.EventoTblController.BuscarPorCategoria(System.Int32)">
             <summary>
             Método para filtrar os eventos de acordo com sua categoria
             </summary>
             <returns>Retorna a lista de eventos</returns>
-            <param name="categoria"></param>
+            <param name="id"></param>
         </member>
         <member name="M:PROJETO.Controllers.EventoTblController.BuscarPorData(System.DateTime)">
             <summary>

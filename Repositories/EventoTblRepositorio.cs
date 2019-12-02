@@ -33,8 +33,8 @@ namespace PROJETO.Repositories
             return listaE;
         }
 
-        public async Task<List<EventoTbl>> BuscarPorCategoria(string categoria){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaNome.Contains(categoria)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+        public async Task<List<EventoTbl>> BuscarPorCategoria(int id){
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
             return listaE;
         }
 
