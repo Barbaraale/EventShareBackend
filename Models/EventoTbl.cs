@@ -29,7 +29,7 @@ namespace PROJETO.Models
         [Column("evento_categoria_id")]
         public int? EventoCategoriaId { get; set; }
         [Column("evento_espaco_id")]
-        public int? EventoEspacoId { get; set; }
+        public int EventoEspacoId { get; set; }
         [Column("evento_status_id")]
         public int? EventoStatusId { get; set; }
         [Column("criador_usuario_id")]

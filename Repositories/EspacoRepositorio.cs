@@ -21,13 +21,5 @@ namespace EventShareBackend_master.Repositories
         {
             return await context.EventoEspacoTbl.FindAsync(id);
         }
-
-        // public async Task<bool> VerificaEspaco(int id){
-               
-        // }
-
-        // public async Task<EventoEspacoTbl> PutEspacoLivre(int id, EventoEspacoTbl espaco){
-            
-        // }
     }
 }

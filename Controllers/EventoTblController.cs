@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EventShareBackend_master.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +91,30 @@ namespace PROJETO.Controllers {
 
             return listaRetornada;
         }
+
+        /// <summary>
+        /// Método para listar os espaços vazios de acordo com a data
+        /// </summary>
+        /// <returns>Retorna uma lista de espaços livres na data digitada como parâmetro</returns>
+        /// <param name="data"></param>
+        [EnableCors]
+        // [Authorize]
+        [AllowAnonymous]
+        [HttpGet("evento/espaco/{data}")]
+        public async Task<ActionResult<List<EventoEspacoTbl>>> VerificaEspaco(DateTime data){
+            EspacoRepositorio repositorioEspaco = new EspacoRepositorio();
+            List<int> ListaIdsDeEspacosVazios =  await repositorio.BuscarEspacoPorData(data);
+            List<EventoEspacoTbl> ListaDeEspacos = new List<EventoEspacoTbl>();
+
+            foreach (var id in ListaIdsDeEspacosVazios){
+                EventoEspacoTbl espacoAtual = await repositorioEspaco.Get(id);
+                ListaDeEspacos.Add(espacoAtual);
+            }
+
+            return ListaDeEspacos;
+        }
+
+
 
         /// <summary>
         /// Método para listar os eventos de acordo com a data 
