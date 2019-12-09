@@ -22,6 +22,10 @@ namespace PROJETO.Repositories
             return await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
         }
 
+        public async Task<List<EventoTbl>> ListarEventosUsuario(int id){
+            return await context.EventoTbl.Where(e => e.CriadorUsuarioId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+        }
+
         public async Task<List<int>> BuscarEspacoPorData(DateTime data){
             List<EventoTbl> listaDeEventos = await context.EventoTbl.Where(e => e.EventoData != data).ToListAsync();
             List<int> IdsDeEspacosVazios = new List<int>();

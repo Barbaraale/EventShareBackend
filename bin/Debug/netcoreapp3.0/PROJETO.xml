@@ -92,6 +92,13 @@
             <returns>Retorna a lista de eventos</returns>
             <param name="id"></param>
         </member>
+        <member name="M:PROJETO.Controllers.EventoTblController.VerificaEspaco(System.DateTime)">
+            <summary>
+            Método para listar os espaços vazios de acordo com a data
+            </summary>
+            <returns>Retorna uma lista de espaços livres na data digitada como parâmetro</returns>
+            <param name="data"></param>
+        </member>
         <member name="M:PROJETO.Controllers.EventoTblController.BuscarPorData(System.DateTime)">
             <summary>
             Método para listar os eventos de acordo com a data 
@@ -146,6 +153,12 @@
             </summary>
             <returns>Retorna o usuário</returns>
             <param name="id"></param>
+        </member>
+        <member name="M:EventShareBackEnd.Controllers.UsuarioTblController.PegarUsuario">
+            <summary>
+            Esse método tem o objetivo de pegar as informações do usuário logado.
+            </summary>
+            <returns>Retorna o usuário</returns>
         </member>
         <member name="M:EventShareBackEnd.Controllers.UsuarioTblController.Post(PROJETO.Models.UsuarioTbl)">
             <summary>

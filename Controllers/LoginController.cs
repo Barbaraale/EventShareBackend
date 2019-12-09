@@ -61,7 +61,8 @@ namespace EventShareBackend.Controllers
                 new Claim(JwtRegisteredClaimNames.NameId, infousuario.UsuarioNome),
                 new Claim(JwtRegisteredClaimNames.Email, infousuario.UsuarioEmail),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, infousuario.UsuarioTipo.TipoNome),
+                new Claim("id", infousuario.UsuarioId.ToString()),
+                new Claim(ClaimTypes.Role, infousuario.UsuarioTipo.TipoNome)
             };
 
             var token = new JwtSecurityToken(config["Jwt:Issuer"], 

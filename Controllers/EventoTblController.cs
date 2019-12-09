@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using EventShareBackEnd.Repositories;
 using EventShareBackend_master.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -25,10 +27,10 @@ namespace PROJETO.Controllers {
         [EnableCors]
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<List<EventoTbl>>> Get () {
+        public async Task<ActionResult<List<EventoTbl>>> Get() {
             List<EventoTbl> listaE = await repositorio.ListarEventos ();
 
-            foreach (var evento in listaE) {
+            foreach (var evento in listaE){
                 evento.EventoCategoria.EventoTbl = null;
                 evento.EventoEspaco.EventoTbl = null;
                 evento.EventoStatus.EventoTbl = null;
@@ -38,6 +40,31 @@ namespace PROJETO.Controllers {
 
             return listaE;
         }
+
+        [Authorize]
+        [HttpGet("perfilusuario")]
+        public async Task<ActionResult<List<EventoTbl>>> ListarEventosPorIdUsuario(){
+             try
+            {
+                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "id").Value;
+                List<EventoTbl> listaE = await repositorio.ListarEventosUsuario(int.Parse(idUsuario));
+
+                foreach (var evento in listaE){
+                    evento.EventoCategoria.EventoTbl = null;
+                    evento.EventoEspaco.EventoTbl = null;
+                    evento.EventoStatus.EventoTbl = null;
+                    evento.CriadorUsuario.EventoTblCriadorUsuario = null;
+                    evento.ResponsavelUsuario.EventoTblResponsavelUsuario = null;
+                }
+
+                return Ok(listaE);
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(500, e);
+            }
+        }
+    
 
         /// <summary>
         /// Método para buscar evento pelo nome

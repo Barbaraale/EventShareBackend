@@ -10,6 +10,7 @@ namespace EventShareBackend_master.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class StatusController : ControllerBase
     {
         EventShareContext context = new EventShareContext();

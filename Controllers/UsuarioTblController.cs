@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using EventShareBackEnd.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,27 @@ namespace EventShareBackEnd.Controllers
             }
 
             return usuario;
+        }
+
+        /// <summary>
+        /// Esse método tem o objetivo de pegar as informações do usuário logado.
+        /// </summary>
+        /// <returns>Retorna o usuário</returns>
+        [Authorize]
+        [HttpGet("perfilusuario")]
+        public async Task<ActionResult<UsuarioTbl>> PegarUsuario(){
+            try
+            {
+                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "id").Value;
+                var usuario = await repositorio.Get(int.Parse(idUsuario));
+
+                return Ok(usuario);
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(500, e);
+            }
+            
         }
 
         /// <summary>
