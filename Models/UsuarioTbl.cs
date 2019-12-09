@@ -10,53 +10,37 @@ namespace PROJETO.Models
     {
         public UsuarioTbl()
         {
-            EventoTblCriadorUsuario = new HashSet<EventoTbl>();
-            EventoTblResponsavelUsuario = new HashSet<EventoTbl>();
+            EventoTbl = new HashSet<EventoTbl>();
         }
 
         [Key]
         [Column("usuario_id")]
         public int UsuarioId { get; set; }
-        
+        [Required]
         [Column("usuario_nome")]
-        // [Required]
         [StringLength(50)]
         public string UsuarioNome { get; set; }
-        
-        [Column("usuario_email")]
         [Required]
+        [Column("usuario_email")]
         [StringLength(100)]
         public string UsuarioEmail { get; set; }
-        
-        // [Column("usuario_rg")]
-        // [StringLength(100)]
-        // public string UsuarioRg { get; set; }
-        
         [Column("usuario_comunidade")]
         [StringLength(100)]
         public string UsuarioComunidade { get; set; }
-        
+        [Required]
         [Column("usuario_senha")]
-        // [Required]
         [StringLength(255)]
         public string UsuarioSenha { get; set; }
-        
         [Column("usuario_tipo_id")]
-        // [Required]
-        public int? UsuarioTipoId { get; set; }
-
+        public int UsuarioTipoId { get; set; }
         [Column("usuario_imagem")]
         [StringLength(250)]
-        public string UsuarioImagem{ get; set; }
+        public string UsuarioImagem { get; set; }
 
         [ForeignKey(nameof(UsuarioTipoId))]
         [InverseProperty(nameof(UsuarioTipoTbl.UsuarioTbl))]
         public virtual UsuarioTipoTbl UsuarioTipo { get; set; }
-        
-        [InverseProperty(nameof(EventoTbl.CriadorUsuario))]
-        public virtual ICollection<EventoTbl> EventoTblCriadorUsuario { get; set; }
-        
-        [InverseProperty(nameof(EventoTbl.ResponsavelUsuario))]
-        public virtual ICollection<EventoTbl> EventoTblResponsavelUsuario { get; set; }
+        [InverseProperty("CriadorUsuario")]
+        public virtual ICollection<EventoTbl> EventoTbl { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace PROJETO.Models
         [Key]
         [Column("tipo_id")]
         public int TipoId { get; set; }
+        [Required]
         [Column("tipo_nome")]
         [StringLength(50)]
         public string TipoNome { get; set; }

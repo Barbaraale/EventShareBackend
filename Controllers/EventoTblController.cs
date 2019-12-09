@@ -34,8 +34,7 @@ namespace PROJETO.Controllers {
                 evento.EventoCategoria.EventoTbl = null;
                 evento.EventoEspaco.EventoTbl = null;
                 evento.EventoStatus.EventoTbl = null;
-                evento.CriadorUsuario.EventoTblCriadorUsuario = null;
-                evento.ResponsavelUsuario.EventoTblResponsavelUsuario = null;
+                
             }
 
             return listaE;
@@ -53,8 +52,7 @@ namespace PROJETO.Controllers {
                     evento.EventoCategoria.EventoTbl = null;
                     evento.EventoEspaco.EventoTbl = null;
                     evento.EventoStatus.EventoTbl = null;
-                    evento.CriadorUsuario.EventoTblCriadorUsuario = null;
-                    evento.ResponsavelUsuario.EventoTblResponsavelUsuario = null;
+                    
                 }
 
                 return Ok(listaE);
@@ -112,8 +110,7 @@ namespace PROJETO.Controllers {
                 evento.EventoCategoria.EventoTbl = null;
                 evento.EventoEspaco.EventoTbl = null;
                 evento.EventoStatus.EventoTbl = null;
-                evento.CriadorUsuario.EventoTblCriadorUsuario = null;
-                evento.ResponsavelUsuario.EventoTblResponsavelUsuario = null;
+                
             }
 
             return listaRetornada;
@@ -191,7 +188,7 @@ namespace PROJETO.Controllers {
                 evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
                 evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
                 evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
-                evento.ResponsavelUsuarioId = int.Parse(Request.Form["ResponsavelUsuarioId"]);
+                
 
                 return await repositorio.Post(evento);
 

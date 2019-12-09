@@ -11,38 +11,42 @@ namespace PROJETO.Models
         [Key]
         [Column("evento_id")]
         public int EventoId { get; set; }
-
+        [Required]
         [Column("evento_nome")]
         [StringLength(100)]
         public string EventoNome { get; set; }
-        
         [Column("evento_data", TypeName = "date")]
-        public DateTime? EventoData { get; set; }
+        public DateTime EventoData { get; set; }
+        [Required]
         [Column("evento_horario_comeco")]
         [StringLength(50)]
         public string EventoHorarioComeco { get; set; }
+        [Required]
         [Column("evento_horario_fim")]
         [StringLength(50)]
         public string EventoHorarioFim { get; set; }
+        [Required]
         [Column("evento_descricao", TypeName = "text")]
         public string EventoDescricao { get; set; }
         [Column("evento_categoria_id")]
-        public int? EventoCategoriaId { get; set; }
+        public int EventoCategoriaId { get; set; }
         [Column("evento_espaco_id")]
         public int EventoEspacoId { get; set; }
         [Column("evento_status_id")]
-        public int? EventoStatusId { get; set; }
+        public int EventoStatusId { get; set; }
         [Column("criador_usuario_id")]
-        public int? CriadorUsuarioId { get; set; }
-        [Column("responsavel_usuario_id")]
-        public int? ResponsavelUsuarioId { get; set; }
-
+        public int CriadorUsuarioId { get; set; }
         [Column("evento_imagem")]
         [StringLength(250)]
-        public string EventoImagem{ get; set; }
+        public string EventoImagem { get; set; }
+        [Column("evento_link_inscricao")]
+        [StringLength(250)]
+        public string EventoLinkInscricao { get; set; }
+        [Column("evento_restrito")]
+        public bool EventoRestrito { get; set; }
 
         [ForeignKey(nameof(CriadorUsuarioId))]
-        [InverseProperty(nameof(UsuarioTbl.EventoTblCriadorUsuario))]
+        [InverseProperty(nameof(UsuarioTbl.EventoTbl))]
         public virtual UsuarioTbl CriadorUsuario { get; set; }
         [ForeignKey(nameof(EventoCategoriaId))]
         [InverseProperty(nameof(EventoCategoriaTbl.EventoTbl))]
@@ -53,8 +57,5 @@ namespace PROJETO.Models
         [ForeignKey(nameof(EventoStatusId))]
         [InverseProperty(nameof(EventoStatusTbl.EventoTbl))]
         public virtual EventoStatusTbl EventoStatus { get; set; }
-        [ForeignKey(nameof(ResponsavelUsuarioId))]
-        [InverseProperty(nameof(UsuarioTbl.EventoTblResponsavelUsuario))]
-        public virtual UsuarioTbl ResponsavelUsuario { get; set; }
     }
 }

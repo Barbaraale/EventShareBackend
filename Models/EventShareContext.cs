@@ -26,7 +26,8 @@ namespace PROJETO.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=EventShare;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-89G52FT\\SQLEXPRESS;Database=EventShare;Trusted_Connection=True;");
             }
         }
 
@@ -35,7 +36,7 @@ namespace PROJETO.Models
             modelBuilder.Entity<EventoCategoriaTbl>(entity =>
             {
                 entity.HasKey(e => e.CategoriaId)
-                    .HasName("PK__evento_c__DB875A4FF7544FBE");
+                    .HasName("PK__evento_c__DB875A4F697C8274");
 
                 entity.Property(e => e.CategoriaNome).IsUnicode(false);
             });
@@ -43,7 +44,7 @@ namespace PROJETO.Models
             modelBuilder.Entity<EventoEspacoTbl>(entity =>
             {
                 entity.HasKey(e => e.EspacoId)
-                    .HasName("PK__evento_e__01BC6094BBFE2231");
+                    .HasName("PK__evento_e__01BC60947106F283");
 
                 entity.Property(e => e.EspacoNome).IsUnicode(false);
             });
@@ -51,7 +52,7 @@ namespace PROJETO.Models
             modelBuilder.Entity<EventoStatusTbl>(entity =>
             {
                 entity.HasKey(e => e.EventoStatusId)
-                    .HasName("PK__evento_s__F2753B700300C754");
+                    .HasName("PK__evento_s__F2753B7085C010CE");
 
                 entity.Property(e => e.EventoStatusNome).IsUnicode(false);
             });
@@ -59,65 +60,69 @@ namespace PROJETO.Models
             modelBuilder.Entity<EventoTbl>(entity =>
             {
                 entity.HasKey(e => e.EventoId)
-                    .HasName("PK__evento_t__1850C3AD331734B5");
+                    .HasName("PK__evento_t__1850C3AD384CEFB4");
 
                 entity.Property(e => e.EventoHorarioComeco).IsUnicode(false);
 
                 entity.Property(e => e.EventoHorarioFim).IsUnicode(false);
 
+                entity.Property(e => e.EventoImagem).IsUnicode(false);
+
+                entity.Property(e => e.EventoLinkInscricao).IsUnicode(false);
+
                 entity.Property(e => e.EventoNome).IsUnicode(false);
 
                 entity.HasOne(d => d.CriadorUsuario)
-                    .WithMany(p => p.EventoTblCriadorUsuario)
+                    .WithMany(p => p.EventoTbl)
                     .HasForeignKey(d => d.CriadorUsuarioId)
-                    .HasConstraintName("FK__evento_tb__criad__44FF419A");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__evento_tb__criad__45F365D3");
 
                 entity.HasOne(d => d.EventoCategoria)
                     .WithMany(p => p.EventoTbl)
                     .HasForeignKey(d => d.EventoCategoriaId)
-                    .HasConstraintName("FK__evento_tb__event__4222D4EF");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__evento_tb__event__4316F928");
 
                 entity.HasOne(d => d.EventoEspaco)
                     .WithMany(p => p.EventoTbl)
                     .HasForeignKey(d => d.EventoEspacoId)
-                    .HasConstraintName("FK__evento_tb__event__4316F928");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__evento_tb__event__440B1D61");
 
                 entity.HasOne(d => d.EventoStatus)
                     .WithMany(p => p.EventoTbl)
                     .HasForeignKey(d => d.EventoStatusId)
-                    .HasConstraintName("FK__evento_tb__event__440B1D61");
-
-                entity.HasOne(d => d.ResponsavelUsuario)
-                    .WithMany(p => p.EventoTblResponsavelUsuario)
-                    .HasForeignKey(d => d.ResponsavelUsuarioId)
-                    .HasConstraintName("FK__evento_tb__respo__45F365D3");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__evento_tb__event__44FF419A");
             });
 
             modelBuilder.Entity<UsuarioTbl>(entity =>
             {
                 entity.HasKey(e => e.UsuarioId)
-                    .HasName("PK__usuario___2ED7D2AFB0CD79B4");
+                    .HasName("PK__usuario___2ED7D2AF7CDB8232");
 
                 entity.Property(e => e.UsuarioComunidade).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioEmail).IsUnicode(false);
 
-                entity.Property(e => e.UsuarioNome).IsUnicode(false);
+                entity.Property(e => e.UsuarioImagem).IsUnicode(false);
 
-                // entity.Property(e => e.UsuarioRg).IsUnicode(false);
+                entity.Property(e => e.UsuarioNome).IsUnicode(false);
 
                 entity.Property(e => e.UsuarioSenha).IsUnicode(false);
 
                 entity.HasOne(d => d.UsuarioTipo)
                     .WithMany(p => p.UsuarioTbl)
                     .HasForeignKey(d => d.UsuarioTipoId)
-                    .HasConstraintName("FK__usuario_t__usuar__3F466844");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__usuario_t__usuar__403A8C7D");
             });
 
             modelBuilder.Entity<UsuarioTipoTbl>(entity =>
             {
                 entity.HasKey(e => e.TipoId)
-                    .HasName("PK__usuario___6EA5A01B2E59D269");
+                    .HasName("PK__usuario___6EA5A01BD0A27AE4");
 
                 entity.Property(e => e.TipoNome).IsUnicode(false);
             });

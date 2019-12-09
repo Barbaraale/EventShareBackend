@@ -19,11 +19,11 @@ namespace PROJETO.Repositories
         
         public async Task<List<EventoTbl>> ListarEventos()
         {
-            return await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            return await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
         }
 
         public async Task<List<EventoTbl>> ListarEventosUsuario(int id){
-            return await context.EventoTbl.Where(e => e.CriadorUsuarioId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            return await context.EventoTbl.Where(e => e.CriadorUsuarioId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
         }
 
         public async Task<List<int>> BuscarEspacoPorData(DateTime data){
@@ -39,17 +39,17 @@ namespace PROJETO.Repositories
 
         public async Task<EventoTbl> BuscarPorNome(string nomeEvento){
             string nomeDoEvento = nomeEvento.ToLower();
-            var retorno = await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).FirstOrDefaultAsync(x => x.EventoNome == nomeEvento);
+            var retorno = await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).FirstOrDefaultAsync(x => x.EventoNome == nomeEvento);
             return retorno;
         }
     
         public async Task<List<EventoTbl>> BuscarPalavraChave(string nome){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(e => e.EventoNome.Contains(nome)).Include(Es => Es.EventoStatus).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            List<EventoTbl> listaE = await context.EventoTbl.Where(e => e.EventoNome.Contains(nome)).Include(Es => Es.EventoStatus).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).ToListAsync();
             return listaE;
         }
 
         public async Task<List<EventoTbl>> BuscarPorCategoria(int id){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoCategoria.CategoriaId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
             return listaE;
         }
 
@@ -59,7 +59,7 @@ namespace PROJETO.Repositories
         }
         
         public async Task<List<EventoTbl>> BuscarPorStatus(string status){
-            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoStatus.EventoStatusNome.Contains(status)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).Include(rev => rev.ResponsavelUsuario).ToListAsync();
+            List<EventoTbl> listaE = await context.EventoTbl.Where(ev => ev.EventoStatus.EventoStatusNome.Contains(status)).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
             return listaE;
         }
         public async Task<EventoTbl> Post(EventoTbl evento){

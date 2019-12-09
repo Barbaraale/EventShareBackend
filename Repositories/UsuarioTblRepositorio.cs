@@ -16,8 +16,6 @@ namespace EventShareBackEnd.Repositories
 
             foreach (var usuario in listaU)
             {
-                usuario.EventoTblCriadorUsuario = null;
-                usuario.EventoTblResponsavelUsuario = null;
                 usuario.UsuarioTipo.UsuarioTbl = null;
             }
 

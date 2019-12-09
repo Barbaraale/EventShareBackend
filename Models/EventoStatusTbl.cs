@@ -16,6 +16,7 @@ namespace PROJETO.Models
         [Key]
         [Column("evento_status_id")]
         public int EventoStatusId { get; set; }
+        [Required]
         [Column("evento_status_nome")]
         [StringLength(50)]
         public string EventoStatusNome { get; set; }

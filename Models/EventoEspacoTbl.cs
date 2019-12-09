@@ -16,6 +16,7 @@ namespace PROJETO.Models
         [Key]
         [Column("espaco_id")]
         public int EspacoId { get; set; }
+        [Required]
         [Column("espaco_nome")]
         [StringLength(50)]
         public string EspacoNome { get; set; }

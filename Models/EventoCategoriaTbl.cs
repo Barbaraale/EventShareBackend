@@ -16,8 +16,8 @@ namespace PROJETO.Models
         [Key]
         [Column("categoria_id")]
         public int CategoriaId { get; set; }
+        [Required]
         [Column("categoria_nome")]
-        // [Required]
         [StringLength(50)]
         public string CategoriaNome { get; set; }
 
