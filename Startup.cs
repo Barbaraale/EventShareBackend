@@ -27,6 +27,8 @@ namespace PROJETO
             Configuration = configuration;
         }
 
+        readonly string PermissaoEntreOrigens = "_PermissaoEntreOrigens";
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -62,15 +64,19 @@ namespace PROJETO
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                builder =>
-                {
-                    builder.WithOrigins("*").WithHeaders("X-custom-header").WithMethods("Get, Post, Put, Delete");
-                });
+            // services.AddCors(options =>
+            // {
+            //     options.AddDefaultPolicy(
+            //     builder =>
+            //     {
+            //         builder.WithOrigins("*").WithHeaders("X-custom-header").WithMethods("Get, Post, Put, Delete");
+            //     });
+            // });
+            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddCors (options => {
+                options.AddPolicy (PermissaoEntreOrigens,
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
         }
 
@@ -84,7 +90,7 @@ namespace PROJETO
 
             app.UseAuthentication();
 
-            app.UseCors();
+            app.UseCors (builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseHttpsRedirection();
 

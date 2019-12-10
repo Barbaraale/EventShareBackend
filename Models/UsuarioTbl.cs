@@ -16,7 +16,7 @@ namespace PROJETO.Models
         [Key]
         [Column("usuario_id")]
         public int UsuarioId { get; set; }
-        [Required]
+        // [Required]
         [Column("usuario_nome")]
         [StringLength(50)]
         public string UsuarioNome { get; set; }
