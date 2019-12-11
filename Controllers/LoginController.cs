@@ -62,6 +62,7 @@ namespace EventShareBackend.Controllers
                 new Claim(JwtRegisteredClaimNames.Email, infousuario.UsuarioEmail),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim("id", infousuario.UsuarioId.ToString()),
+                new Claim("Role", infousuario.UsuarioTipo.TipoNome),
                 new Claim(ClaimTypes.Role, infousuario.UsuarioTipo.TipoNome)
             };
 
