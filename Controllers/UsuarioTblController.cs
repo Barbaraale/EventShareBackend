@@ -90,7 +90,7 @@ namespace EventShareBackEnd.Controllers
         [EnableCors]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UsuarioTbl>> Post([FromForm] UsuarioTbl usuario)
+        public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
         {
             if(await repositorio.ValidaEmail(usuario)){
                 return BadRequest("Esse E-mail já foi cadastrado");
@@ -104,31 +104,38 @@ namespace EventShareBackEnd.Controllers
                 throw new System.ArgumentException("A senha possui menos de 8 caracteres");
             }
 
+            try
+            {
+                await repositorio.Post(usuario);
+                return Ok("Usuário cadastrado!");
+            }
+            catch (System.Exception)
+            {
+                return BadRequest(new { mensagem = "Verifique os campos em nulo."});
+                throw;
+            }
+
             // var arquivo = Request.Form.Files[0];
             // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
 
-            usuario.UsuarioNome = Request.Form["UsuarioNome"];
-            if(usuario.UsuarioNome == null){
-                throw new System.ArgumentNullException("Campo Nome é obrigatório.");
-            }
+            // usuario.UsuarioNome = Request.Form["UsuarioNome"];
+            // if(usuario.UsuarioNome == null){
+            //     throw new System.ArgumentNullException("Campo Nome é obrigatório.");
+            // }
 
-            usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
-            if(usuario.UsuarioEmail == null){
-                throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
-            }
+            // usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+            // if(usuario.UsuarioEmail == null){
+            //     throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
+            // }
 
-            usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+            // usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
 
-            usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
-            if(usuario.UsuarioSenha == null){
-                throw new System.ArgumentNullException("Campo Senha é obrigatório.");
-            }
+            // usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+            // if(usuario.UsuarioSenha == null){
+            //     throw new System.ArgumentNullException("Campo Senha é obrigatório.");
+            // }
 
-            usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
-            
-
-            await repositorio.Post(usuario);
-            return Ok("Usuário cadastrado!");
+            // usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
         }
 
         /// <summary>

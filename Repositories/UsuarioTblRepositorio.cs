@@ -39,10 +39,8 @@ namespace EventShareBackEnd.Repositories
 
         public async Task<UsuarioTbl> Post(UsuarioTbl usuario)
         {
-           
-
             UsuarioTbl usuarioCadastrado = usuario;
-            usuarioCadastrado.UsuarioNome = usuario.UsuarioNome.ToLower();
+            // usuarioCadastrado.UsuarioNome = usuario.UsuarioNome.ToLower();
 
             await context.UsuarioTbl.AddAsync(usuarioCadastrado);
             await context.SaveChangesAsync();
