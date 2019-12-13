@@ -70,7 +70,7 @@ namespace EventShareBackEnd.Controllers
         public async Task<ActionResult<UsuarioTbl>> PegarUsuario(){
             try
             {
-                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "id").Value;
+                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "UserId").Value;
                 var usuario = await repositorio.Get(int.Parse(idUsuario));
 
                 return Ok(usuario);
@@ -125,9 +125,7 @@ namespace EventShareBackEnd.Controllers
             }
 
             usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
-            if(usuario.UsuarioTipoId == null){
-                throw new System.ArgumentNullException("Tipo do usuário não pode ser nulo.");
-            }
+            
 
             await repositorio.Post(usuario);
             return Ok("Usuário cadastrado!");
@@ -137,55 +135,61 @@ namespace EventShareBackEnd.Controllers
         /// Método para atualizar dados de um usuário cadastrado
         /// </summary>
         /// <returns>Retorna o usuario</returns>
+        /// <param name="id"></param>
         /// <param name="usuario"></param>
         [EnableCors]
         // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<UsuarioTbl>> Put([FromForm]UsuarioTbl usuario)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<UsuarioTbl>> Put(int id, UsuarioTbl usuario)
         {
-            var usuarioAlterado = await repositorio.Get(usuario.UsuarioId);
+            var usuarioAlterado = await repositorio.Get(id);
+
             if(usuarioAlterado == null){
                 return NotFound("Usuário não encontrado.");
             }
 
-            if(usuarioAlterado.UsuarioId != usuario.UsuarioId){
-                return BadRequest("Id inválida");
+            try
+            {
+                return await repositorio.Put(usuario);
             }
+            catch (System.ArgumentException)
+            {
+                return BadRequest(new { mensagem = "Verifique os campos em nulo."});
+                throw;
+            }
+
+            // if(id != usuario.UsuarioId){
+            //     return BadRequest("Id inválida");
+            // }
 
             // var arquivo = Request.Form.Files[0];
-            usuario.UsuarioId = usuarioAlterado.UsuarioId;
+            // usuario.UsuarioId = usuarioAlterado.UsuarioId;
             // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
 
-            usuario.UsuarioNome = Request.Form["UsuarioNome"];
-            if(usuario.UsuarioNome == null){
-                throw new System.ArgumentNullException("Campo Nome é obrigatório.");
-            }
+            // usuario.UsuarioNome = Request.Form["UsuarioNome"];
+
+
+            // if(usuario.UsuarioNome == null){
+            //     throw new System.ArgumentNullException("Campo Nome é obrigatório.");
+            // }
                 
-            usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
-            if(usuario.UsuarioEmail == null){
-                throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
-            }
+            // // usuario.UsuarioEmail = Request.Form["UsuarioEmail"];
+            // if(usuario.UsuarioEmail == null){
+            //     throw new System.ArgumentNullException("Campo E-mail é obrigatório.");
+            // }
 
-            usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
-            if(usuario.UsuarioComunidade == null){
-                throw new System.ArgumentNullException("Digite o nome da comunidade.");
-            }
+            // usuario.UsuarioComunidade = Request.Form["UsuarioComunidade"];
+            // if(usuario.UsuarioComunidade == null){
+            //     throw new System.ArgumentNullException("Digite o nome da comunidade.");
+            // }
 
-            usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
-            if(usuario.UsuarioTipoId == null){
-                throw new System.ArgumentNullException("O campo tipo é obrigatório");
-            }
+            // usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+            
 
-            usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
-            if(usuario.UsuarioSenha == null){
-                throw new System.ArgumentNullException("O campo Senha é obrigatório");
-            }else if(usuario.UsuarioSenha.Length < 8){
-                throw new System.ArgumentException("A senha possui menos de 8 caracteres");
-            }else if(usuarioAlterado.UsuarioSenha == usuario.UsuarioSenha){
-                throw new System.ArgumentException("A senha digitada é igual a senha atual.");
-            }
+            // usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
+            
 
-            return await repositorio.Put(usuario);   
+            // return await repositorio.Put(usuario);   
         }
 
         /// <summary>

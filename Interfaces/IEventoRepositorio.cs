@@ -10,6 +10,7 @@ namespace PROJETO.Interfaces
         Task<EventoTbl> BuscarPorId(int id);
         Task<List<EventoTbl>> ListarEventos();
 
+        Task<int> EventosCadastradosDia(DateTime data);
         Task<List<EventoTbl>> ListarEventosUsuario(int id);
         Task<List<EventoTbl>> BuscarPalavraChave(string nome);
         Task<EventoTbl> BuscarPorNome(string nomeEvento);

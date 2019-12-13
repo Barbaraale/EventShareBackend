@@ -19,11 +19,17 @@ namespace PROJETO.Repositories
         
         public async Task<List<EventoTbl>> ListarEventos()
         {
-            return await context.EventoTbl.Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
+            return await context.EventoTbl.Include(e => e.EventoCategoria).Include(e => e.EventoEspaco).Include(e => e.EventoStatus).Include(e => e.CriadorUsuario).ToListAsync();
+        }
+
+        public async Task<int> EventosCadastradosDia(DateTime data){
+            List<EventoTbl> listaDeEventos = await context.EventoTbl.Where(e => e.EventoData == data).Include(e => e.EventoCategoria).Include(e => e.EventoEspaco).Include(e => e.EventoStatus).Include(e => e.CriadorUsuario).ToListAsync();
+
+            return listaDeEventos.Count;
         }
 
         public async Task<List<EventoTbl>> ListarEventosUsuario(int id){
-            return await context.EventoTbl.Where(e => e.CriadorUsuarioId == id).Include(Ec => Ec.EventoCategoria).Include(Eesp => Eesp.EventoEspaco).Include(Es => Es.EventoStatus).Include(ecria => ecria.CriadorUsuario).ToListAsync();
+            return await context.EventoTbl.Where(e => e.CriadorUsuarioId == id).Include(e => e.EventoCategoria).Include(e => e.EventoEspaco).Include(e => e.EventoStatus).Include(e => e.CriadorUsuario).ToListAsync();
         }
 
         public async Task<List<int>> BuscarEspacoPorData(DateTime data){

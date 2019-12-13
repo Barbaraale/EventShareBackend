@@ -53,21 +53,21 @@ namespace EventShareBackEnd.Repositories
         {
             UsuarioTbl usuarioModificado = await context.UsuarioTbl.FindAsync(usuario.UsuarioId);
 
-            usuarioModificado.UsuarioId = usuario.UsuarioId;
+            // usuarioModificado.UsuarioId = usuario.UsuarioId;
             usuarioModificado.UsuarioNome = usuario.UsuarioNome;
             usuarioModificado.UsuarioEmail = usuario.UsuarioEmail;
             usuarioModificado.UsuarioComunidade = usuario.UsuarioComunidade;
             usuarioModificado.UsuarioSenha = usuario.UsuarioSenha;
             usuarioModificado.UsuarioTipoId = usuario.UsuarioTipoId;
 
-            // context.Entry(usuarioModificado).State = EntityState.Modified;
+            // context.Entry(usuario).State = EntityState.Modified;
             await context.SaveChangesAsync();
-            return usuarioModificado;
+            return usuario;
         }
 
         public async Task<UsuarioTbl> Delete(int id)
         {
-            UsuarioTbl usuario = await context.UsuarioTbl.FindAsync(id);
+           UsuarioTbl usuario = await context.UsuarioTbl.FindAsync(id);
 
             if(usuario == null)
             {

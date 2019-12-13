@@ -28,7 +28,7 @@ namespace PROJETO.Controllers {
         [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<List<EventoTbl>>> Get() {
-            List<EventoTbl> listaE = await repositorio.ListarEventos ();
+            List<EventoTbl> listaE = await repositorio.ListarEventos();
 
             foreach (var evento in listaE){
                 evento.EventoCategoria.EventoTbl = null;
@@ -40,29 +40,40 @@ namespace PROJETO.Controllers {
             return listaE;
         }
 
+        [EnableCors]
         [Authorize]
-        [HttpGet("perfilusuario")]
-        public async Task<ActionResult<List<EventoTbl>>> ListarEventosPorIdUsuario(){
-             try
+        [HttpGet("perfilusuario/{id}")]
+        public async Task<ActionResult<List<EventoTbl>>> ListarEventosPorIdUsuario(int id){
+            try
             {
-                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "id").Value;
-                List<EventoTbl> listaE = await repositorio.ListarEventosUsuario(int.Parse(idUsuario));
+                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "UserId").Value;
+                List<EventoTbl> listaE = await repositorio.ListarEventosUsuario(id);
 
-                foreach (var evento in listaE){
-                    evento.EventoCategoria.EventoTbl = null;
-                    evento.EventoEspaco.EventoTbl = null;
-                    evento.EventoStatus.EventoTbl = null;
-                    
+                foreach (var element in listaE){
+                    element.EventoCategoria.EventoTbl = null;
+                    element.EventoEspaco.EventoTbl = null;
+                    element.EventoStatus.EventoTbl = null;
                 }
 
-                return Ok(listaE);
+                return listaE;
             }
             catch (System.Exception e)
             {
                 return StatusCode(500, e);
             }
         }
-    
+
+        [HttpGet("teste/{data}")]
+        public async Task<ActionResult<int>> QntEventos(DateTime data){
+            try
+            {
+                return await repositorio.EventosCadastradosDia(data);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
 
         /// <summary>
         /// Método para buscar evento pelo nome

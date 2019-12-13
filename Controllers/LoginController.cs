@@ -49,7 +49,6 @@ namespace EventShareBackend.Controllers
         private UsuarioTbl autenticarUsuario(UsuarioTbl login){
             var usuario = context.UsuarioTbl.Include(u => u.UsuarioTipo).FirstOrDefault(user => user.UsuarioEmail == login.UsuarioEmail && user.UsuarioSenha == login.UsuarioSenha);
 
-
             return usuario;
         }
 
@@ -61,7 +60,7 @@ namespace EventShareBackend.Controllers
                 new Claim(JwtRegisteredClaimNames.NameId, infousuario.UsuarioNome),
                 new Claim(JwtRegisteredClaimNames.Email, infousuario.UsuarioEmail),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("id", infousuario.UsuarioId.ToString()),
+                new Claim("UserId", infousuario.UsuarioId.ToString()),
                 new Claim(ClaimTypes.Role, infousuario.UsuarioTipo.TipoNome)
             };
 
