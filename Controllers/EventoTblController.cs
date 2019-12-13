@@ -186,26 +186,29 @@ namespace PROJETO.Controllers {
         [EnableCors]
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<EventoTbl>> Post([FromForm]EventoTbl evento) {
+        public async Task<ActionResult<EventoTbl>> Post(EventoTbl evento) {
             try {
                 // var arquivo = Request.Form.Files[0];
                 // evento.EventoImagem = upload.Upload(arquivo, "images");
-                evento.EventoNome = Request.Form["EventoNome"];
-                evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
-                evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
-                evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
-                evento.EventoDescricao = Request.Form["EventoDescricao"];
-                evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
-                evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
-                evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
-                evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
-                
+                // evento.EventoNome = Request.Form["EventoNome"];
+                // evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
+                // evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
+                // evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
+                // evento.EventoDescricao = Request.Form["EventoDescricao"];
+                // evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
+                // evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
+                // evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
+                // evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
 
-                return await repositorio.Post(evento);
+                await repositorio.Post(evento);
+                return Ok("Evento cadastrado!");
 
             } catch (System.ArgumentException){
+                return BadRequest(new { mensagem = "Verifique os campos nulos."});
                 throw;
                 // return BadRequest("Evento não cadastrado devido à campos inválidos.");
+            } catch (System.FormatException){
+                return BadRequest( new { mensagem = "Deu ruim."});
             }
         }
 
@@ -213,23 +216,33 @@ namespace PROJETO.Controllers {
         /// Método para atualizar informaçoes de um evento previamente cadastrado
         /// </summary>
         /// <returns>Retorna o evento relacionado ao ID</returns>
+        /// <param name="id"></param>
         /// <param name="evento"></param>
         [EnableCors]
         // [Authorize]
-        [HttpPut]
-        public async Task<ActionResult<EventoTbl>> Put([FromForm]EventoTbl evento) {
-            try {
+        [HttpPut("{id}")]
+        public async Task<ActionResult<EventoTbl>> Put(int id, EventoTbl evento) {
+            var eventoEncontrado = await repositorio.BuscarPorId(id);
 
+            if(id != evento.EventoId){
+                return BadRequest("Ids divergentes.");
+            }
+
+            if(eventoEncontrado == null){
+                return NotFound("Usuário não encontrado.");
+            }
+
+            try {
                 // var arquivo = Request.Form.Files[0];
                 // evento.EventoImagem = upload.Upload(arquivo, "images");
-                evento.EventoId = int.Parse(Request.Form["EventoId"]);
-                evento.EventoNome = Request.Form["EventoNome"];
-                evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
-                evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
-                evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
-                evento.EventoDescricao = Request.Form["EventoDescricao"];
-                evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
-                evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
+                // evento.EventoId = int.Parse(Request.Form["EventoId"]);
+                // evento.EventoNome = Request.Form["EventoNome"];
+                // evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
+                // evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
+                // evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
+                // evento.EventoDescricao = Request.Form["EventoDescricao"];
+                // evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
+                // evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
 
                 return await repositorio.Put(evento);
 

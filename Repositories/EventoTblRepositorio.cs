@@ -70,26 +70,31 @@ namespace PROJETO.Repositories
         }
         public async Task<EventoTbl> Post(EventoTbl evento){
         
-            EventoTbl eventoCadastrado = evento;
+            // EventoTbl eventoCadastrado = evento;
             
-            await context.EventoTbl.AddAsync(eventoCadastrado);
+            await context.EventoTbl.AddAsync(evento);
             await context.SaveChangesAsync();
-            return eventoCadastrado;
+            return evento;
         }
 
         public async Task<EventoTbl> Put(EventoTbl evento){
             EventoTbl eventoEncontrado = await context.EventoTbl.FindAsync(evento.EventoId);
             
-            // eventoEncontrado.EventoNome = evento.EventoNome.ToLower();
-            // eventoEncontrado.EventoHorarioComeco = evento.EventoHorarioComeco;
-            // eventoEncontrado.EventoHorarioFim = evento.EventoHorarioFim;
-            // eventoEncontrado.EventoData = evento.EventoData;
-            // eventoEncontrado.EventoDescricao = evento.EventoDescricao;
-            // eventoEncontrado.EventoEspacoId = evento.EventoEspacoId;
-            // eventoEncontrado.ResponsavelUsuarioId = evento.ResponsavelUsuarioId;
-            // eventoEncontrado.EventoCategoriaId = evento.EventoCategoriaId;
+            eventoEncontrado.EventoHorarioComeco = evento.EventoHorarioComeco;
+            eventoEncontrado.EventoHorarioFim = evento.EventoHorarioFim;
+            eventoEncontrado.EventoData = evento.EventoData;
+            eventoEncontrado.EventoDescricao = evento.EventoDescricao;
+            eventoEncontrado.EventoEspacoId = evento.EventoEspacoId;
+            eventoEncontrado.EventoCategoriaId = evento.EventoCategoriaId;
+            eventoEncontrado.EventoDescricao = evento.EventoDescricao;
+            eventoEncontrado.EventoLinkInscricao = evento.EventoLinkInscricao;
+            eventoEncontrado.EventoCoffe = evento.EventoCoffe;
+            eventoEncontrado.EventoDiversidade = evento.EventoDiversidade;
+            eventoEncontrado.EventoNumeroParticipantes = evento.EventoNumeroParticipantes;
+            eventoEncontrado.EventoRestrito = evento.EventoRestrito;
+            eventoEncontrado.EventoObsAdicional = evento.EventoObsAdicional;
                         
-            context.Entry(eventoEncontrado).State = EntityState.Modified;
+            // context.Entry(eventoEncontrado).State = EntityState.Modified;
             await context.SaveChangesAsync();
             return eventoEncontrado;
         }

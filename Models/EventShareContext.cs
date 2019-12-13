@@ -65,7 +65,7 @@ namespace PROJETO.Models
 
                 entity.Property(e => e.EventoHorarioFim).IsUnicode(false);
 
-                entity.Property(e => e.EventoImagem).IsUnicode(false);
+                // entity.Property(e => e.EventoImagem).IsUnicode(false);
 
                 entity.Property(e => e.EventoLinkInscricao).IsUnicode(false);
 

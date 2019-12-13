@@ -36,14 +36,27 @@ namespace PROJETO.Models
         public int EventoStatusId { get; set; }
         [Column("criador_usuario_id")]
         public int CriadorUsuarioId { get; set; }
-        [Column("evento_imagem")]
-        [StringLength(250)]
-        public string EventoImagem { get; set; }
+        // [Column("evento_imagem")]
+        // [StringLength(250)]
+        // public string EventoImagem { get; set; }
         [Column("evento_link_inscricao")]
         [StringLength(250)]
         public string EventoLinkInscricao { get; set; }
+
         [Column("evento_restrito")]
         public bool EventoRestrito { get; set; }
+
+        [Column("evento_numero_participantes")]
+        public int EventoNumeroParticipantes { get; set;}
+
+        [Column("evento_diversidade")]
+        public string EventoDiversidade { get; set; }
+
+        [Column("evento_coffe")]
+        public bool EventoCoffe { get; set; }
+
+        [Column("evento_obs_adicional")]
+        public string EventoObsAdicional { get; set; }
 
         [ForeignKey(nameof(CriadorUsuarioId))]
         [InverseProperty(nameof(UsuarioTbl.EventoTbl))]

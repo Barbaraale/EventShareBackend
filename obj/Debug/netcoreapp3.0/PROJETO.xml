@@ -120,11 +120,12 @@
             <returns>Retorna o evento criado</returns>
             <param name="evento"></param>
         </member>
-        <member name="M:PROJETO.Controllers.EventoTblController.Put(PROJETO.Models.EventoTbl)">
+        <member name="M:PROJETO.Controllers.EventoTblController.Put(System.Int32,PROJETO.Models.EventoTbl)">
             <summary>
             Método para atualizar informaçoes de um evento previamente cadastrado
             </summary>
             <returns>Retorna o evento relacionado ao ID</returns>
+            <param name="id"></param>
             <param name="evento"></param>
         </member>
         <member name="M:PROJETO.Controllers.EventoTblController.Delete(System.Int32)">

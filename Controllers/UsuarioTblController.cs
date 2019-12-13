@@ -151,6 +151,10 @@ namespace EventShareBackEnd.Controllers
         {
             var usuarioAlterado = await repositorio.Get(id);
 
+            if(id != usuario.UsuarioId){
+                return BadRequest("Ids divergentes.");
+            }
+
             if(usuarioAlterado == null){
                 return NotFound("Usuário não encontrado.");
             }
