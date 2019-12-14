@@ -206,19 +206,26 @@ namespace PROJETO.Controllers {
         [EnableCors]
         // [Authorize]
         [HttpPost]
-        public async Task<ActionResult<EventoTbl>> Post(EventoTbl evento) {
+        public async Task<ActionResult<EventoTbl>> Post([FromForm]EventoTbl evento) {
             try {
                 // var arquivo = Request.Form.Files[0];
                 // evento.EventoImagem = upload.Upload(arquivo, "images");
-                // evento.EventoNome = Request.Form["EventoNome"];
-                // evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
-                // evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
-                // evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
-                // evento.EventoDescricao = Request.Form["EventoDescricao"];
-                // evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
-                // evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
-                // evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
-                // evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
+                evento.EventoNome = Request.Form["EventoNome"];
+                evento.EventoData = DateTime.Parse(Request.Form["EventoData"]);
+                evento.EventoHorarioComeco = Request.Form["EventoHorarioComeco"];
+                evento.EventoHorarioFim = Request.Form["EventoHorarioFim"];
+                evento.EventoDescricao = Request.Form["EventoDescricao"];
+                evento.EventoCategoriaId = int.Parse(Request.Form["EventoCategoriaId"]);
+                evento.EventoEspacoId = int.Parse(Request.Form["EventoEspacoId"]);
+                evento.EventoStatusId = int.Parse(Request.Form["EventoStatusId"]);
+                evento.CriadorUsuarioId = int.Parse(Request.Form["CriadorUsuarioId"]);
+                evento.EventoLinkInscricao = Request.Form["EventoLinkDescricao"];
+                evento.EventoImagem = Request.Form["EventoImagem"];
+                evento.EventoRestrito = bool.Parse(Request.Form["EventoRestrito"]);
+                evento.EventoNumeroParticipantes = int.Parse(Request.Form["EventoNumeroParticipantes"]);
+                evento.EventoDiversidade = Request.Form["EventoDiversidade"];
+                evento.EventoCoffe = bool.Parse(Request.Form["EventoCoffe"]);
+                evento.EventoObsAdicional = Request.Form["EventoObsAdicional"];
 
                 await repositorio.Post(evento);
                 return Ok("Evento cadastrado!");

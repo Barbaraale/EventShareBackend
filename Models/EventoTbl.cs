@@ -36,9 +36,9 @@ namespace PROJETO.Models
         public int EventoStatusId { get; set; }
         [Column("criador_usuario_id")]
         public int CriadorUsuarioId { get; set; }
-        // [Column("evento_imagem")]
-        // [StringLength(250)]
-        // public string EventoImagem { get; set; }
+        [Column("evento_imagem")]
+        [StringLength(250)]
+        public string EventoImagem { get; set; }
         [Column("evento_link_inscricao")]
         [StringLength(250)]
         public string EventoLinkInscricao { get; set; }

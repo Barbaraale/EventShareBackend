@@ -92,6 +92,13 @@
             <returns>Retorna a lista de eventos</returns>
             <param name="id"></param>
         </member>
+        <member name="M:PROJETO.Controllers.EventoTblController.BuscarPorId(System.Int32)">
+            <summary>
+            Esse método retorna um evento de acordo com seu ID
+            </summary>
+            <returns>Objeto evento</returns>
+            <param name="id"></param>
+        </member>
         <member name="M:PROJETO.Controllers.EventoTblController.VerificaEspaco(System.DateTime)">
             <summary>
             Método para listar os espaços vazios de acordo com a data
