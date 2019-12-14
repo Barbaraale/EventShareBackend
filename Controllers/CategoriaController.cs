@@ -57,7 +57,7 @@ namespace EventShareBackend_master.Controllers
            {
                if(element.CategoriaNome.Contains(categoria.CategoriaNome)){
                    throw new System.ArgumentException("Categoria já existe.");
-               }
+               } 
            }       
 
            return  await repositorio.Post(categoria);

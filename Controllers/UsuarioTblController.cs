@@ -136,6 +136,7 @@ namespace EventShareBackEnd.Controllers
             }
 
             usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
+            await repositorio.Post(usuario);
             return Ok("Usuário cadastrado");
         }
 
