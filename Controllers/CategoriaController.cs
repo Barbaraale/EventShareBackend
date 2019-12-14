@@ -49,6 +49,15 @@ namespace EventShareBackend_master.Controllers
                throw new System.ArgumentNullException("A categoria deve ter um nome");
            }else if(categoria.CategoriaNome.Length < 3){
                throw new System.ArgumentException("Nome da categoria deve conter um mínimo de 3 caracteres");
+           }
+
+           List<EventoCategoriaTbl> listaC = await repositorio.Get();
+
+           foreach (var element in listaC)
+           {
+               if(element.CategoriaNome.Contains(categoria.CategoriaNome)){
+                   throw new System.ArgumentException("Categoria já existe.");
+               }
            }       
 
            return  await repositorio.Post(categoria);
