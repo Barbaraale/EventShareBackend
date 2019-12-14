@@ -44,9 +44,14 @@ namespace PROJETO.Controllers {
         [Authorize]
         [HttpGet("perfilusuario/{id}")]
         public async Task<ActionResult<List<EventoTbl>>> ListarEventosPorIdUsuario(int id){
+            var idUsuario = int.Parse(HttpContext.User.Claims.First(a => a.Type == "UserId").Value);
+
+            if(id != idUsuario){
+                    return BadRequest("Inválido.");
+            }
+
             try
             {
-                var idUsuario = HttpContext.User.Claims.First(a => a.Type == "UserId").Value;
                 List<EventoTbl> listaE = await repositorio.ListarEventosUsuario(id);
 
                 foreach (var element in listaE){
