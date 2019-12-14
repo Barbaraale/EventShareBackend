@@ -133,6 +133,21 @@ namespace PROJETO.Controllers {
         }
 
         /// <summary>
+        /// Esse método retorna um evento de acordo com seu ID
+        /// </summary>
+        /// <returns>Objeto evento</returns>
+        /// <param name="id"></param>
+        [EnableCors]
+        [AllowAnonymous]
+        [HttpGet ("evento/{id}")]
+        public async Task<EventoTbl> BuscarPorId(int id) {
+            EventoTbl eventoRetornado = await repositorio.BuscarPorId(id);
+
+            return eventoRetornado;
+        }
+
+
+        /// <summary>
         /// Método para listar os espaços vazios de acordo com a data
         /// </summary>
         /// <returns>Retorna uma lista de espaços livres na data digitada como parâmetro</returns>
