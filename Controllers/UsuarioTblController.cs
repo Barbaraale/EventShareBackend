@@ -90,7 +90,7 @@ namespace EventShareBackEnd.Controllers
         [EnableCors]
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UsuarioTbl>> Post(UsuarioTbl usuario)
+        public async Task<ActionResult<UsuarioTbl>> Post([FromForm]UsuarioTbl usuario)
         {
             if(await repositorio.ValidaEmail(usuario)){
                 return BadRequest("Esse E-mail já foi cadastrado");
