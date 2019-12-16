@@ -57,6 +57,12 @@ namespace EventShareBackEnd.Controllers
             {
                 return NotFound("Usuário não encontrado.");
             }
+             var arquivo = Request.Form.Files[0];
+            usuario.UsuarioImagem = upload.Upload(arquivo, "images/UsuarioTbl");
+
+            if(usuario.UsuarioImagem == null){
+                throw new System.ArgumentException("Imagem Obrigatória");
+            }
 
             return usuario;
         }
@@ -70,6 +76,7 @@ namespace EventShareBackEnd.Controllers
         public async Task<ActionResult<UsuarioTbl>> PegarUsuario(){
             try
             {
+                
                 var idUsuario = HttpContext.User.Claims.First(a => a.Type == "UserId").Value;
                 var usuario = await repositorio.Get(int.Parse(idUsuario));
 
@@ -133,6 +140,12 @@ namespace EventShareBackEnd.Controllers
             usuario.UsuarioSenha = Request.Form["UsuarioSenha"];
             if(usuario.UsuarioSenha == null){
                 throw new System.ArgumentNullException("Campo Senha é obrigatório.");
+            }            
+            var arquivo = Request.Form.Files[0];
+            usuario.UsuarioImagem = upload.Upload(arquivo, "images/UsuarioTbl");
+
+            if(usuario.UsuarioImagem == null){
+                throw new System.ArgumentException("Imagem Obrigatória");
             }
 
             usuario.UsuarioTipoId = int.Parse(Request.Form["UsuarioTipoId"]);
@@ -160,24 +173,26 @@ namespace EventShareBackEnd.Controllers
             if(usuarioAlterado == null){
                 return NotFound("Usuário não encontrado.");
             }
-
+                var arquivo = Request.Form.Files[0];
+                usuario.UsuarioImagem = upload.Upload(arquivo, "images/UsuarioTbl");
             try
-            {
+            {  
+                usuario.UsuarioImagem = upload.Upload(arquivo, "images/UsuarioTbl");
+
+                if(usuario.UsuarioImagem == null){
+                    throw new System.ArgumentException("Imagem Obrigatória");
+            }
+                if(usuario.UsuarioImagem == null){
+                throw new System.ArgumentException("Imagem Obrigatória");
+            }
+
                 return await repositorio.Put(usuario);
             }
             catch (System.ArgumentException)
             {
                 return BadRequest(new { mensagem = "Verifique os campos em nulo."});
-                throw;
             }
 
-            // if(id != usuario.UsuarioId){
-            //     return BadRequest("Id inválida");
-            // }
-
-            // var arquivo = Request.Form.Files[0];
-            // usuario.UsuarioId = usuarioAlterado.UsuarioId;
-            // usuario.UsuarioImagem = upload.Upload(arquivo, "images");
 
             // usuario.UsuarioNome = Request.Form["UsuarioNome"];
 

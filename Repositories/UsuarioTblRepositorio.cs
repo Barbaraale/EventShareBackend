@@ -42,6 +42,8 @@ namespace EventShareBackEnd.Repositories
             UsuarioTbl usuarioCadastrado = usuario;
             // usuarioCadastrado.UsuarioNome = usuario.UsuarioNome.ToLower();
 
+            usuarioCadastrado.UsuarioImagem = usuario.UsuarioImagem;
+            
             await context.UsuarioTbl.AddAsync(usuarioCadastrado);
             await context.SaveChangesAsync();
             return usuarioCadastrado;
@@ -57,6 +59,7 @@ namespace EventShareBackEnd.Repositories
             usuarioModificado.UsuarioComunidade = usuario.UsuarioComunidade;
             usuarioModificado.UsuarioSenha = usuario.UsuarioSenha;
             usuarioModificado.UsuarioTipoId = usuario.UsuarioTipoId;
+            usuarioModificado.UsuarioImagem = usuario.UsuarioImagem;
 
             // context.Entry(usuario).State = EntityState.Modified;
             await context.SaveChangesAsync();

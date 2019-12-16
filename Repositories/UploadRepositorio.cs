@@ -9,10 +9,6 @@ namespace tst.Repositorio {
         EventShareContext context = new EventShareContext ();
         public string Upload (IFormFile arquivo, string savingFolder) {
 
-            if (savingFolder == null) {
-                savingFolder = Path.Combine ("imgUpdated");
-            }
-
             var pathToSave = Path.Combine (Directory.GetCurrentDirectory (), savingFolder);
 
             if (arquivo.Length > 0) {
@@ -21,12 +17,12 @@ namespace tst.Repositorio {
 
                 using (var stream = new FileStream (fullPath, FileMode.Create)) {
                     arquivo.CopyTo (stream);
-                }
+                }                    
 
-                return fullPath;
+                return savingFolder + "/" +fileName;
             } else {
-                return null;
-            }
+                return null;    
+            }  
         }
 
     }

@@ -34,7 +34,6 @@ namespace PROJETO.Controllers {
                 evento.EventoCategoria.EventoTbl = null;
                 evento.EventoEspaco.EventoTbl = null;
                 evento.EventoStatus.EventoTbl = null;
-                
             }
 
             return listaE;
